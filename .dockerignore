@@ -1,0 +1,16 @@
+node_modules
+dist
+dist-ssr
+.git
+.gitignore
+.env
+.env.*
+
+# Playwright
+playwright-report/
+test-results/
+
+# IDE
+.vscode
+.idea
+.DS_Store

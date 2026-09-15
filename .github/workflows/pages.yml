@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+# GitHub Pages for private repositories requires a paid plan, so this
+# workflow does not run on push. It is kept ready as a manual dispatch:
+# once the repository goes public again, run it once from the Actions tab
+# and re-enable the push trigger below.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      # GitHub Pages serves project sites under /<repo-name>/, so the build
+      # needs a matching asset base path. Routing is hash-based, so no SPA
+      # fallback (404.html) is needed for deep links.
+      - name: Build
+        run: bunx vite build --base=/aria2-dashboard/
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+      - id: deployment
+        uses: actions/deploy-pages@v5

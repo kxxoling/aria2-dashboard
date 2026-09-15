@@ -1,0 +1,29 @@
+services:
+  aria2-dashboard:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      # The RPC url is injected into the browser app, so it must be an address
+      # the visitor's browser can reach (not a docker-internal hostname).
+      - "${DASHBOARD_PORT:-8080}:80"
+    environment:
+      - ARIA2_RPC_URL=${ARIA2_RPC_URL:-ws://localhost:6800/jsonrpc}
+      - ARIA2_RPC_SECRET=${ARIA2_RPC_SECRET:-}
+    restart: unless-stopped
+    depends_on:
+      - aria2
+
+  aria2:
+    image: p3terx/aria2-pro
+    restart: unless-stopped
+    ports:
+      - "${ARIA2_RPC_PORT:-6800}:6800"
+    volumes:
+      - aria2-data:/data
+    environment:
+      - RPC_SECRET=${ARIA2_RPC_SECRET:-}
+      - RPC_PORT=6800
+
+volumes:
+  aria2-data:

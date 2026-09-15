@@ -1,0 +1,6 @@
+# Ensure shell scripts keep LF line endings so the Docker entrypoint works
+# regardless of contributor OS / git autocrlf settings.
+*.sh text eol=lf
+
+# Normalize text files
+* text=auto
