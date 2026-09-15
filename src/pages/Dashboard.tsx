@@ -102,6 +102,10 @@ export function Dashboard() {
     ...getDashboardFeatures(),
     data,
     columns,
+    // Polling refreshes the data array; the table must not treat every
+    // refresh as a reset — auto-resets re-dispatch state from a microtask
+    // and, combined with a per-render `data` reference, render-loop forever.
+    autoResetAll: false,
     // Polling re-creates the task array every second; identify rows by gid so
     // selections do not drift onto the wrong task when the list shifts.
     getRowId: (row) => row.gid,
