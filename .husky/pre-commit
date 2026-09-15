@@ -1,3 +1,4 @@
+set -e
 bun run lint
 bun run typecheck
 bun run test
