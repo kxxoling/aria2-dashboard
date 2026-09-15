@@ -7,6 +7,25 @@
 A modern web dashboard and Chrome extension for the
 [Aria2](https://aria2.github.io/) download manager.
 
+## Screenshots
+
+<details>
+<summary>Screenshots (click to expand)</summary>
+
+**Solarized Dark theme** — task list
+
+![Solarized Dark theme — task list](./screenshots/solarized-dark.png)
+
+**Gruvbox Light theme** — task list
+
+![Gruvbox Light theme — task list](./screenshots/gruvbox-light.png)
+
+**Gruvbox Light theme** — settings
+
+![Gruvbox Light theme — settings](./screenshots/gruvbox-light-settings.png)
+
+</details>
+
 ## For Users
 
 ### Features
