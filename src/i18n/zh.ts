@@ -1,6 +1,17 @@
 /** 简体中文资源 */
 export const zh = {
   translation: {
+    // Task status labels shown in badges and the detail dialog
+    tasks: {
+      statuses: {
+        active: "下载中",
+        waiting: "等待中",
+        paused: "已暂停",
+        error: "错误",
+        complete: "已完成",
+        removed: "已移除",
+      },
+    },
     options: {
       // aria2 option labels, grouped per option registry (nested keys)
       categories: {

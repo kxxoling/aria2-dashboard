@@ -1,6 +1,17 @@
 /** 日本語 */
 export const ja = {
   translation: {
+    // Task status labels shown in badges and the detail dialog
+    tasks: {
+      statuses: {
+        active: "ダウンロード中",
+        waiting: "待機中",
+        paused: "一時停止",
+        error: "エラー",
+        complete: "完了",
+        removed: "削除済み",
+      },
+    },
     options: {
       // aria2 option labels, grouped per option registry (nested keys)
       categories: {

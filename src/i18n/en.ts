@@ -1,6 +1,17 @@
 /** English resources — keys are the English source strings. */
 export const en = {
   translation: {
+    // Task status labels shown in badges and the detail dialog
+    tasks: {
+      statuses: {
+        active: "Active",
+        waiting: "Waiting",
+        paused: "Paused",
+        error: "Error",
+        complete: "Complete",
+        removed: "Removed",
+      },
+    },
     options: {
       // aria2 option labels, grouped per option registry (nested keys)
       categories: {

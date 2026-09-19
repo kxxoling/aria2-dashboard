@@ -1,6 +1,17 @@
 /** Español */
 export const es = {
   translation: {
+    // Task status labels shown in badges and the detail dialog
+    tasks: {
+      statuses: {
+        active: "Descargando",
+        waiting: "En espera",
+        paused: "Pausado",
+        error: "Error",
+        complete: "Completado",
+        removed: "Eliminado",
+      },
+    },
     options: {
       // aria2 option labels, grouped per option registry (nested keys)
       categories: {

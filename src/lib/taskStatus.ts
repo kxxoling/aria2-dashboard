@@ -54,25 +54,26 @@ export function isTerminalStatus(status: string): boolean {
   return status === "complete" || status === "error" || status === "removed";
 }
 
-/** Bilingual status labels (AriaNg-style: raw aria2 status in English,
- *  natural download terms in Chinese). */
-const statusLabels: Record<string, { en: string; zh: string }> = {
-  active: { en: "Active", zh: "下载中" },
-  waiting: { en: "Waiting", zh: "等待中" },
-  paused: { en: "Paused", zh: "已暂停" },
-  error: { en: "Error", zh: "错误" },
-  complete: { en: "Complete", zh: "已完成" },
-  removed: { en: "Removed", zh: "已移除" },
-};
+/**
+ * Task status labels, resolved through i18next from the nested
+ * tasks.statuses.* locale trees (all nine languages). Unknown statuses
+ * pass the raw aria2 string through.
+ */
+import type { TFunction } from "i18next";
+
+const KNOWN_STATUSES = new Set([
+  "active",
+  "waiting",
+  "paused",
+  "error",
+  "complete",
+  "removed",
+]);
 
 export function taskStatusLabel(
   status: string,
-  language: string,
+  t: TFunction,
 ): { label: string; known: boolean } {
-  const entry = statusLabels[status];
-  if (!entry) return { label: status, known: false };
-  return {
-    label: language.startsWith("zh") ? entry.zh : entry.en,
-    known: true,
-  };
+  if (!KNOWN_STATUSES.has(status)) return { label: status, known: false };
+  return { label: t(`tasks.statuses.${status}`), known: true };
 }

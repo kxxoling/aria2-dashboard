@@ -5,6 +5,7 @@
  */
 
 import { describe, expect, test } from "vitest";
+import { resources } from "@/i18n";
 import {
   isMetadataTask,
   metadataTaskLabel,
@@ -55,7 +56,11 @@ describe("metadataTaskLabel", () => {
 });
 
 describe("taskStatusLabel", () => {
-  test("translates every aria2 status into both languages", async () => {
+  /** i18next-style t stub: returns the key prefixed, proving lookups go
+   *  through the translator instead of a hardcoded language branch. */
+  const t = ((key: string) => `T:${key}`) as never;
+
+  test("known statuses resolve through the i18n key path", async () => {
     const { taskStatusLabel } = await import("@/lib/taskStatus");
     for (const status of [
       "active",
@@ -65,20 +70,43 @@ describe("taskStatusLabel", () => {
       "complete",
       "removed",
     ]) {
-      expect(taskStatusLabel(status, "en").known).toBe(true);
-      expect(taskStatusLabel(status, "en-US").label.length).toBeGreaterThan(0);
-      expect(taskStatusLabel(status, "zh-CN").label).not.toBe(status);
+      expect(taskStatusLabel(status, t)).toEqual({
+        label: `T:tasks.statuses.${status}`,
+        known: true,
+      });
     }
-    expect(taskStatusLabel("active", "en").label).toBe("Active");
-    expect(taskStatusLabel("active", "zh").label).toBe("下载中");
-    expect(taskStatusLabel("complete", "zh").label).toBe("已完成");
   });
 
   test("unknown statuses pass through unchanged", async () => {
     const { taskStatusLabel } = await import("@/lib/taskStatus");
-    expect(taskStatusLabel("weird", "zh")).toEqual({
+    expect(taskStatusLabel("weird", t)).toEqual({
       label: "weird",
       known: false,
     });
+  });
+
+  test("every status is translated in every locale", async () => {
+    const { taskStatusLabel } = await import("@/lib/taskStatus");
+    const statuses = [
+      "active",
+      "waiting",
+      "paused",
+      "error",
+      "complete",
+      "removed",
+    ];
+    for (const [, bundle] of Object.entries(resources)) {
+      const tree = bundle.translation as Record<string, unknown> as {
+        tasks: { statuses: Record<string, string> };
+      };
+      for (const status of statuses) {
+        // a missing entry would render the raw key path in the UI
+        expect(tree.tasks.statuses[status]?.length, status).toBeGreaterThan(0);
+        expect(tree.tasks.statuses[status], status).not.toBe(
+          `tasks.statuses.${status}`,
+        );
+      }
+      expect(taskStatusLabel("active", t).known).toBe(true);
+    }
   });
 });

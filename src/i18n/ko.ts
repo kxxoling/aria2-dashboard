@@ -1,6 +1,17 @@
 /** 한국어 */
 export const ko = {
   translation: {
+    // Task status labels shown in badges and the detail dialog
+    tasks: {
+      statuses: {
+        active: "다운로드 중",
+        waiting: "대기 중",
+        paused: "일시정지",
+        error: "오류",
+        complete: "완료",
+        removed: "제거됨",
+      },
+    },
     options: {
       // aria2 option labels, grouped per option registry (nested keys)
       categories: {

@@ -34,7 +34,7 @@ const checkboxHitArea =
  * batch toolbar — not in a permanent column.
  */
 export function useTaskColumns() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return useMemo<ColumnDef<Aria2Task>[]>(
     () => [
@@ -189,12 +189,12 @@ export function useTaskColumns() {
               variant="outline"
               className={`whitespace-nowrap ${statusVisual(status).badgeClass}`}
             >
-              {taskStatusLabel(status, i18n.language).label}
+              {taskStatusLabel(status, t).label}
             </Badge>
           );
         },
       },
     ],
-    [t, i18n.language],
+    [t],
   );
 }

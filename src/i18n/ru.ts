@@ -1,6 +1,17 @@
 /** Русский */
 export const ru = {
   translation: {
+    // Task status labels shown in badges and the detail dialog
+    tasks: {
+      statuses: {
+        active: "Загрузка",
+        waiting: "Ожидание",
+        paused: "Пауза",
+        error: "Ошибка",
+        complete: "Завершено",
+        removed: "Удалено",
+      },
+    },
     options: {
       // aria2 option labels, grouped per option registry (nested keys)
       categories: {
