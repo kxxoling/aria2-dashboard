@@ -1,6 +1,10 @@
 /** Русский */
 export const ru = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "Не удалось получить журнал",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {

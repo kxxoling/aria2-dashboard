@@ -1,6 +1,10 @@
 /** Français */
 export const fr = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "Échec de la récupération du journal",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {

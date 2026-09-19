@@ -1,6 +1,10 @@
 /** 简体中文资源 */
 export const zh = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "日志获取失败",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {

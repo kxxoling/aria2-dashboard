@@ -1,6 +1,10 @@
 /** 日本語 */
 export const ja = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "ログの取得に失敗しました",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {

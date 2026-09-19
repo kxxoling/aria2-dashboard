@@ -1,6 +1,10 @@
 /** 繁體中文（台灣用語） */
 export const zhTW = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "日誌取得失敗",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {

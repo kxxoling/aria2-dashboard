@@ -1,6 +1,10 @@
 /** Português */
 export const pt = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "Falha ao buscar o log",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {

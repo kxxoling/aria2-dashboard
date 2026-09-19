@@ -1,6 +1,10 @@
 /** 한국어 */
 export const ko = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "로그를 가져오지 못했습니다",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {

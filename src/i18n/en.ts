@@ -1,6 +1,10 @@
 /** English resources — keys are the English source strings. */
 export const en = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "Failed to fetch the log",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {

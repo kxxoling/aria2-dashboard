@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   filterLogLines,
   LOG_LEVELS,
@@ -25,15 +26,29 @@ const levelClass: Record<LogLevel, string> = {
 
 /**
  * Fetches the aria2 log over the same origin (/aria2-log — provided by the
- * all-in-one image). Other deployments 404 and get an explanatory card
- * instead of an error.
+ * all-in-one image). Every other deployment (vite dev server, extension
+ * origin, no reverse proxy) resolves to LOG_ENDPOINT_UNAVAILABLE so the
+ * panel shows the explanatory card instead of a raw fetch error:
+ * - network-level failure (extension scheme, CORS, nothing listening)
+ * - 404
+ * - a 200 text/html response — the SPA fallback of dev servers
  */
+const LOG_ENDPOINT_UNAVAILABLE = "LOG_ENDPOINT_UNAVAILABLE";
+
 async function fetchAria2Log(): Promise<string> {
-  const res = await fetch("/aria2-log", { cache: "no-store" });
+  let res: Response;
+  try {
+    res = await fetch("/aria2-log", { cache: "no-store" });
+  } catch {
+    throw new Error(LOG_ENDPOINT_UNAVAILABLE);
+  }
   if (!res.ok) {
     throw new Error(
-      res.status === 404 ? "LOG_ENDPOINT_UNAVAILABLE" : `HTTP ${res.status}`,
+      res.status === 404 ? LOG_ENDPOINT_UNAVAILABLE : `HTTP ${res.status}`,
     );
+  }
+  if ((res.headers.get("content-type") ?? "").includes("text/html")) {
+    throw new Error(LOG_ENDPOINT_UNAVAILABLE);
   }
   return res.text();
 }
@@ -43,17 +58,42 @@ export function LogsPanel() {
   const [query, setQuery] = useState("");
   const [tail, setTail] = useState<number>(500);
   const [autoRefresh, setAutoRefresh] = useState(true);
+  const [manualRefreshing, setManualRefreshing] = useState(false);
   const [levels, setLevels] = useState<Set<LogLevel>>(
     () => new Set(["DEBUG", "INFO", "NOTICE", "WARN", "ERROR"]),
   );
   const boxRef = useRef<HTMLDivElement>(null);
 
-  const { data, isError, error, refetch, isFetching } = useQuery({
+  // `isFetching` is deliberately not consumed: react-query tracks the props
+  // a component reads, and watching fetch transitions would re-render (and
+  // flash) the whole panel every poll cycle even when the log is unchanged.
+  // Re-renders happen only on actual data/error changes. Polling also stops
+  // while the endpoint is in an error state — hammering a dead endpoint
+  // cannot recover it; the Retry button restarts it.
+  const { data, error, refetch } = useQuery({
     queryKey: ["aria2Log"],
     queryFn: fetchAria2Log,
-    refetchInterval: autoRefresh ? 5000 : false,
+    refetchInterval: autoRefresh
+      ? (query) => (query.state.error ? false : 5000)
+      : false,
     retry: false,
   });
+
+  // react-query clears `error` the moment a refetch starts, which would
+  // unmount the card and flash an empty log view mid-retry. Remember the
+  // last error during render and only let it go when data actually arrives.
+  const lastErrorRef = useRef<Error | null>(null);
+  if (error !== null) lastErrorRef.current = error as Error;
+  const failed = lastErrorRef.current !== null && data === undefined;
+
+  const handleManualRefresh = async () => {
+    setManualRefreshing(true);
+    try {
+      await refetch();
+    } finally {
+      setManualRefreshing(false);
+    }
+  };
 
   const lines = useMemo(() => {
     const parsed = parseLog(data ?? "");
@@ -80,8 +120,36 @@ export function LogsPanel() {
     });
   };
 
-  if (isError) {
-    const unavailable = (error as Error).message === "LOG_ENDPOINT_UNAVAILABLE";
+  // First load in flight (no data, no error yet): render a skeleton instead
+  // of the toolbar + empty log box, which would visibly flash before the
+  // content lands. Once data exists it stays on screen across refetches.
+  if (data === undefined && lastErrorRef.current === null) {
+    return (
+      <div className="space-y-3" aria-busy="true">
+        <div className="flex flex-wrap items-center gap-2">
+          <Skeleton className="h-9 min-w-[180px] flex-1" />
+          <Skeleton className="h-9 w-[220px]" />
+          <Skeleton className="h-8 w-24" />
+        </div>
+        <div className="h-[calc(100vh-320px)] min-h-[300px] space-y-2.5 rounded-lg border bg-card p-3">
+          {[35, 52, 69, 86, 43, 60, 77, 94, 51, 68].map((width) => (
+            <Skeleton
+              key={width}
+              className="h-3.5"
+              style={{ width: `${width}%` }}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Gate on "errored AND never had data": during a manual refetch the
+  // transient fetch state must not unmount the card (and flash an empty
+  // log view) — it stays until a fetch actually succeeds.
+  if (failed) {
+    const unavailable =
+      lastErrorRef.current?.message === LOG_ENDPOINT_UNAVAILABLE;
     return (
       <div className="space-y-3 rounded-lg border bg-card p-6 text-sm">
         <div className="flex items-center gap-2 font-medium">
@@ -93,12 +161,16 @@ export function LogsPanel() {
             ? t(
                 "The built-in log view is provided by the all-in-one Docker image (nginx serves aria2's log file at /aria2-log). For other deployments, start aria2 with --log and expose the file through your reverse proxy.",
               )
-            : (error as Error).message}
+            : `${t("logs.fetchFailed")} (${lastErrorRef.current?.message})`}
         </p>
-        <Button variant="outline" size="sm" onClick={() => refetch()}>
-          <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
-          {t("Retry")}
-        </Button>
+        {/* No Retry in the unavailable case: this deployment has no log
+            endpoint at all, so refetching can never succeed. */}
+        {!unavailable && (
+          <Button variant="outline" size="sm" onClick={handleManualRefresh}>
+            <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
+            {t("Retry")}
+          </Button>
+        )}
       </div>
     );
   }
@@ -167,11 +239,11 @@ export function LogsPanel() {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => refetch()}
-          disabled={isFetching}
+          onClick={handleManualRefresh}
+          disabled={manualRefreshing}
         >
           <RefreshCw
-            className={`mr-1.5 h-3.5 w-3.5 ${isFetching ? "animate-spin" : ""}`}
+            className={`mr-1.5 h-3.5 w-3.5 ${manualRefreshing ? "animate-spin" : ""}`}
           />
           {t("Refresh")}
         </Button>

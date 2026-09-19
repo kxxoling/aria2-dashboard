@@ -1,6 +1,10 @@
 /** Español */
 export const es = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "Error al obtener el registro",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {
