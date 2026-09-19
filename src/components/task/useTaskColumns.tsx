@@ -15,6 +15,18 @@ import { clampPercent, formatBytes, formatEta } from "@/lib/utils.format";
 import type { Aria2Task } from "@/types/aria2";
 
 /**
+ * Column id of the task-name column. The detail dialog opens from this cell
+ * only — value cells (progress, size, speed...) stay click-neutral.
+ */
+export const TASK_NAME_COLUMN_ID = "files";
+
+// The 16px checkbox box alone is a tiny pointer target. An invisible
+// ::before inset by 12px widens the hit area — pseudo-element clicks hit
+// the button itself, so keyboard behavior stays untouched.
+const checkboxHitArea =
+  "relative before:absolute before:-inset-3 before:content-['']";
+
+/**
  * Column definitions for the task table. Memoized on the language so the
  * polling-driven re-renders do not rebuild the array every second.
  *
@@ -35,6 +47,7 @@ export function useTaskColumns() {
             onCheckedChange={(value) =>
               table.toggleAllPageRowsSelected(!!value)
             }
+            className={checkboxHitArea}
             aria-label={t("Select all")}
           />
         ),
@@ -42,7 +55,7 @@ export function useTaskColumns() {
           <Checkbox
             checked={row.getIsSelected()}
             onCheckedChange={(value) => row.toggleSelected(!!value)}
-            onClick={(e) => e.stopPropagation()}
+            className={checkboxHitArea}
             aria-label={t("Select row")}
           />
         ),
