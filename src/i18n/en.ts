@@ -232,6 +232,10 @@ export const en = {
     Discard: "Discard",
     "Save Changes": "Save Changes",
     "Aria2 settings saved": "Aria2 settings saved",
+    "The built-in log view is provided by the all-in-one Docker image (nginx serves aria2's log file at /aria2-log). For other deployments, start aria2 with --log and expose the file through your reverse proxy.":
+      "The built-in log view is provided by the all-in-one Docker image (nginx serves aria2's log file at /aria2-log). For other deployments, start aria2 with --log and expose the file through your reverse proxy.",
+    "Select all": "Select all",
+    "Select row": "Select row",
     "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
       "Only comma-separated tracker URLs are supported (no line breaks or spaces)",
     "Comma-separated tracker URLs (line breaks are not supported)":

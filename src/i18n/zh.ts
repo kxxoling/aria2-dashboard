@@ -231,6 +231,10 @@ export const zh = {
     Discard: "放弃更改",
     "Save Changes": "保存更改",
     "Aria2 settings saved": "Aria2 设置已保存",
+    "The built-in log view is provided by the all-in-one Docker image (nginx serves aria2's log file at /aria2-log). For other deployments, start aria2 with --log and expose the file through your reverse proxy.":
+      "内置日志视图由 all-in-one Docker 镜像提供（nginx 在 /aria2-log 路径暴露 aria2 的日志文件）。其他部署方式请用 --log 启动 aria2，并通过反向代理暴露该文件。",
+    "Select all": "全选",
+    "Select row": "选择此行",
     "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
       "仅支持逗号分隔的 tracker URL（不能包含换行或空格）",
     "Comma-separated tracker URLs (line breaks are not supported)":

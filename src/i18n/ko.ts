@@ -231,6 +231,10 @@ export const ko = {
     Discard: "버리기",
     "Save Changes": "변경 사항 저장",
     "Aria2 settings saved": "Aria2 설정이 저장되었습니다",
+    "The built-in log view is provided by the all-in-one Docker image (nginx serves aria2's log file at /aria2-log). For other deployments, start aria2 with --log and expose the file through your reverse proxy.":
+      "내장 로그 뷰는 all-in-one Docker 이미지에서 제공됩니다(nginx가 /aria2-log 경로로 aria2 로그 파일을 노출). 다른 배포에서는 --log 옵션으로 aria2를 시작하고 리버스 프록시로 파일을 노출하세요.",
+    "Select all": "모두 선택",
+    "Select row": "이 행 선택",
     "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
       "쉼표로 구분된 트래커 URL만 지원됩니다 (줄바꿈·공백 불가)",
     "Comma-separated tracker URLs (line breaks are not supported)":

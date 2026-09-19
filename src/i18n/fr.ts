@@ -233,6 +233,10 @@ export const fr = {
     Discard: "Annuler",
     "Save Changes": "Enregistrer les modifications",
     "Aria2 settings saved": "Paramètres Aria2 enregistrés",
+    "The built-in log view is provided by the all-in-one Docker image (nginx serves aria2's log file at /aria2-log). For other deployments, start aria2 with --log and expose the file through your reverse proxy.":
+      "Le visualiseur de journal intégré est fourni par l'image Docker tout-en-un (nginx sert le fichier journal d'aria2 sur /aria2-log). Pour les autres déploiements, démarrez aria2 avec --log et exposez le fichier via votre proxy inverse.",
+    "Select all": "Tout sélectionner",
+    "Select row": "Sélectionner la ligne",
     "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
       "Seules les URLs de trackers séparées par des virgules sont acceptées (ni retours à la ligne ni espaces)",
     "Comma-separated tracker URLs (line breaks are not supported)":
