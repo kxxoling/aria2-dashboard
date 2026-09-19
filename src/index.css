@@ -58,6 +58,38 @@
   }
 }
 
+/* ---- Scrollbars: thin, rounded, theme-aware (vars follow .dark and
+   every data-scheme palette, so the thumb stays subtle everywhere) ---- */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground) / 0.35) transparent;
+}
+
+/* Chromium / WebKit (dashboard browsers + the extension popup) */
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.35);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 /* ---- Color schemes (generated from official palettes; hex -> HSL) ---- */
 
 :root[data-scheme="solarized"] {
