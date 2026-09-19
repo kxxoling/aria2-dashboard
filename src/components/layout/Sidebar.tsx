@@ -42,7 +42,7 @@ export function Sidebar({ className }: { className?: string }) {
             </Button>
           )}
         </Link>
-        <Link to="/aria2-settings">
+        <Link to="/settings" search={{ tab: "aria2" }}>
           {({ isActive }) => (
             <Button
               variant={isActive ? "secondary" : "ghost"}
@@ -68,7 +68,7 @@ export function Sidebar({ className }: { className?: string }) {
             </Button>
           )}
         </Link>
-        <Link to="/settings">
+        <Link to="/settings" search={{ tab: "connection" }}>
           {({ isActive }) => (
             <Button
               variant={isActive ? "secondary" : "ghost"}

@@ -1,3 +1,4 @@
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -23,16 +24,36 @@ import {
 import { Aria2SettingsPanel } from "@/pages/Aria2Settings";
 import { useAppStore } from "@/store";
 
+const SETTINGS_TABS = ["interface", "connection", "aria2", "logs"] as const;
+type SettingsTab = (typeof SETTINGS_TABS)[number];
+const isSettingsTab = (value: string): value is SettingsTab =>
+  (SETTINGS_TABS as readonly string[]).includes(value);
+
 /**
  * Combined settings page: connection (local app) and aria2 (remote daemon)
- * live in tabs so the mobile bottom nav stays a three-slot layout.
+ * live in tabs so the mobile bottom nav stays a three-slot layout. The
+ * ?tab= search param selects the tab and stays in sync with it — the
+ * sidebar and the dashboard error banner deep-link into specific tabs.
  */
 export function Settings() {
   const { t } = useTranslation();
+  const navigate = useNavigate({ from: "/settings" });
+  const { tab } = useSearch({ from: "/settings" });
+  const activeTab: SettingsTab =
+    tab != null && isSettingsTab(tab) ? tab : "interface";
+
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold tracking-tight">{t("Settings")}</h2>
-      <Tabs defaultValue="interface">
+      <Tabs
+        value={activeTab}
+        onValueChange={(value) =>
+          navigate({
+            search: { tab: isSettingsTab(value) ? value : "interface" },
+            replace: true,
+          })
+        }
+      >
         <TabsList className="flex-wrap">
           <TabsTrigger value="interface">{t("Interface")}</TabsTrigger>
           <TabsTrigger value="connection">

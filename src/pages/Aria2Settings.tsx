@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { RotateCcw, Save, SlidersHorizontal } from "lucide-react";
+import { RotateCcw, Save } from "lucide-react";
 import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -22,30 +22,17 @@ import {
 } from "@/config/aria2Options";
 
 /**
- * The settings editor itself — shared by the /aria2-settings page and the
- * combined settings tabs. Categories are collapsible accordion sections;
- * desktop gets a sticky table of contents on the left. The host page may
- * control the open category (used for ?cat= URL linking on the standalone
- * page); without control props the panel keeps its own state.
+ * The settings editor — the single aria2 options UI, embedded as the
+ * "aria2" tab of the combined /settings page. Categories are collapsible
+ * accordion sections; desktop gets a sticky table of contents on the left.
  */
-export function Aria2SettingsPanel({
-  category,
-  onCategoryChange,
-}: {
-  category?: string;
-  onCategoryChange?: (category: string) => void;
-} = {}) {
+export function Aria2SettingsPanel() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const queryClient = useQueryClient();
   // "" = everything collapsed (the default); the open section is the accordion
   // value, and closing a section reports "" back through onValueChange.
-  const [internalCategory, setInternalCategory] = useState<string>("");
-  const activeCategory = category ?? internalCategory;
-  const setActiveCategory = (next: string) => {
-    setInternalCategory(next);
-    onCategoryChange?.(next);
-  };
+  const [activeCategory, setActiveCategory] = useState<string>("");
   /** Local edits: key -> new value. Diffed against server values on save. */
   const [edits, setEdits] = useState<Record<string, string>>({});
 
@@ -236,30 +223,6 @@ export function Aria2SettingsPanel({
           </div>
         </div>
       )}
-    </div>
-  );
-}
-
-/** Standalone page shell for the desktop sidebar entry. */
-export function Aria2Settings() {
-  const { t } = useTranslation();
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">
-            {t("Aria2 Settings")}
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            {t("Live options of the connected aria2 instance")}
-          </p>
-        </div>
-        <Badge variant="outline" className="gap-1 text-xs">
-          <SlidersHorizontal className="h-3 w-3" />
-          aria2 RPC
-        </Badge>
-      </div>
-      <Aria2SettingsPanel />
     </div>
   );
 }

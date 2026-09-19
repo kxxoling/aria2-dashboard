@@ -20,18 +20,33 @@ test.beforeEach(async ({ request }) => {
  */
 
 test.describe("Aria2 settings page", () => {
-  test("navigation entry opens the settings page", async ({ page }) => {
+  test("navigation entry opens the aria2 settings tab", async ({ page }) => {
     await page.goto("/");
     await page
       .getByRole("button", { name: "Aria2 Settings", exact: true })
       .click();
+    // The sidebar entry deep-links into the combined settings page
+    await expect(page).toHaveURL(/#\/settings\?tab=aria2/);
     await expect(
-      page.getByText("Live options of the connected aria2 instance"),
+      page.getByRole("tab", { name: "Aria2 Settings" }),
+    ).toHaveAttribute("aria-selected", "true");
+    await expect(
+      page.locator("nav button", { hasText: "Basic" }),
     ).toBeVisible();
   });
 
-  test("shows real global options from the fixture", async ({ page }) => {
+  test("old /aria2-settings deep link redirects to the aria2 tab", async ({
+    page,
+  }) => {
     await page.goto("/#/aria2-settings");
+    await expect(page).toHaveURL(/#\/settings\?tab=aria2/);
+    await expect(
+      page.getByRole("tab", { name: "Aria2 Settings" }),
+    ).toHaveAttribute("aria-selected", "true");
+  });
+
+  test("shows real global options from the fixture", async ({ page }) => {
+    await page.goto("/#/settings?tab=aria2");
     await page.waitForTimeout(800);
     // Sections start collapsed; expand Basic (via the TOC) first
     await page.locator("nav button", { hasText: "Basic" }).click();
@@ -295,7 +310,7 @@ test.describe("app settings (AriaNg parity)", () => {
   });
 
   test("aria2 settings accordion expands categories", async ({ page }) => {
-    await page.goto("/#/aria2-settings");
+    await page.goto("/#/settings?tab=aria2");
     await page.waitForTimeout(800);
     // everything is collapsed by default
     await expect(page.locator("#aria2-option-dir")).toHaveCount(0);
@@ -312,7 +327,7 @@ test.describe("app settings (AriaNg parity)", () => {
   });
 
   test("disk-cache renders human-readable", async ({ page }) => {
-    await page.goto("/#/aria2-settings");
+    await page.goto("/#/settings?tab=aria2");
     await page.waitForTimeout(800);
     await page.locator("nav button", { hasText: "Basic" }).click();
     await page.waitForTimeout(400);
