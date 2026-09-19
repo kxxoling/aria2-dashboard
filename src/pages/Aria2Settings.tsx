@@ -18,7 +18,6 @@ import {
   getOptionsForCategory,
   type OptionCategory,
   optionCategories,
-  pickLabel,
 } from "@/config/aria2Options";
 import { validateOptionValue } from "@/config/optionValidation";
 
@@ -28,8 +27,7 @@ import { validateOptionValue } from "@/config/optionValidation";
  * accordion sections; desktop gets a sticky table of contents on the left.
  */
 export function Aria2SettingsPanel() {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language;
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   // "" = everything collapsed (the default); the open section is the accordion
   // value, and closing a section reports "" back through onValueChange.
@@ -136,7 +134,7 @@ export function Aria2SettingsPanel() {
                   }`}
                 >
                   <span className="truncate">
-                    {pickLabel(category.label, lang)}
+                    {t(`options.categories.${category.id}`)}
                   </span>
                   {catDirty > 0 ? (
                     <span className="ml-1.5 rounded-full bg-primary px-1.5 text-[10px] font-semibold text-primary-foreground">
@@ -169,7 +167,7 @@ export function Aria2SettingsPanel() {
                 >
                   <AccordionTrigger className="px-1">
                     <span className="flex items-center gap-2">
-                      {pickLabel(category.label, lang)}
+                      {t(`options.categories.${category.id}`)}
                       {catDirty > 0 && (
                         <Badge variant="default" className="text-[10px]">
                           {t("{{count}} modified", { count: catDirty })}

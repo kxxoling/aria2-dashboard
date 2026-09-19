@@ -36,7 +36,7 @@ export function OverviewTab({
   task: Aria2TaskStatus;
   onNavigateGid: (gid: string) => void;
 }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const visual = statusVisual(task.status);
   const total = Number(task.totalLength);
   const completed = Number(task.completedLength);
@@ -65,7 +65,7 @@ export function OverviewTab({
         <div>
           <InfoRow label={t("Status")}>
             <Badge variant="outline" className={visual.badgeClass}>
-              {taskStatusLabel(task.status, i18n.language).label}
+              {taskStatusLabel(task.status, t).label}
             </Badge>
             {task.seeder === "true" && (
               <Badge variant="outline" className="ml-1.5 text-[10px]">

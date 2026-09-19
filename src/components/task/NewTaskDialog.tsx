@@ -15,12 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  aria2Options,
-  type OptionCategory,
-  optionCategories,
-  pickLabel,
-} from "@/config/aria2Options";
+import { aria2Options, type OptionCategory } from "@/config/aria2Options";
 import { validateOptionValue } from "@/config/optionValidation";
 import { useAppStore } from "@/store";
 
@@ -43,7 +38,7 @@ export function NewTaskDialog({
   const [optionErrors, setOptionErrors] = useState<Record<string, string>>({});
   const [taskOptions, setTaskOptions] = useState<Record<string, string>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const hotkeysEnabled = useAppStore((s) => s.settings.hotkeysEnabled);
   useHotkeys(
@@ -239,11 +234,7 @@ export function NewTaskDialog({
               {advancedGroups.map(([category, defs]) => (
                 <div key={category} className="space-y-1">
                   <h4 className="px-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    {pickLabel(
-                      optionCategories.find((c) => c.id === category)
-                        ?.label ?? { en: category, zh: category },
-                      i18n.language,
-                    )}
+                    {t(`options.categories.${category}`)}
                   </h4>
                   {defs.map((def) => (
                     <OptionField

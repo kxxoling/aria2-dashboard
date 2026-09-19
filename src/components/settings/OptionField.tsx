@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { Aria2OptionDef } from "@/config/aria2Options";
-import { pickLabel } from "@/config/aria2Options";
 import { formatBytes } from "@/lib/utils.format";
 
 /**
@@ -28,14 +27,18 @@ export function OptionField({
   error?: string | null;
   onChange: (value: string) => void;
 }) {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language;
+  const { t } = useTranslation();
   const id = useMemo(() => `aria2-option-${def.key}`, [def.key]);
   const inputDisabled = disabled || def.readonly;
   // Placeholders are English source strings acting as i18n keys; untranslated
   // technical hints (paths, URL patterns) fall back to the key itself.
   const placeholder = def.placeholder ? t(def.placeholder) : undefined;
-  const suffix = def.suffix ? pickLabel(def.suffix, lang) : undefined;
+  // Labels/suffixes live in the nested options.* locale trees, keyed by the
+  // aria2 option name. A missing suffix translation returns the key itself,
+  // which is how "no suffix for this option" is detected.
+  const suffixKey = `options.suffixes.${def.key}`;
+  const suffixText = t(suffixKey);
+  const suffix = suffixText !== suffixKey ? suffixText : undefined;
   // aria2 reports byte counts for size options; render read-only ones
   // human-readable (editable fields keep the raw value to avoid fight the user).
   const humanSize =
@@ -58,7 +61,7 @@ export function OptionField({
           htmlFor={id}
           className={`text-sm ${inputDisabled ? "text-muted-foreground" : ""}`}
         >
-          {pickLabel(def.label, lang)}
+          {t(`options.fields.${def.key}`)}
         </Label>
         <code className="truncate font-mono text-[11px] text-muted-foreground/70">
           {def.key}

@@ -9,6 +9,7 @@ import {
   getOptionsForSurface,
   optionCategories,
 } from "@/config/aria2Options";
+import { resources } from "@/i18n";
 import { realGlobalOption } from "@/mocks/fixtures";
 
 describe("aria2Options schema", () => {
@@ -49,10 +50,21 @@ describe("aria2Options schema", () => {
     expect(new Set(keys).size).toBe(keys.length);
   });
 
-  test("all en and zh labels are non-empty", () => {
-    for (const def of aria2Options) {
-      expect(def.label.en.length).toBeGreaterThan(0);
-      expect(def.label.zh.length).toBeGreaterThan(0);
+  test("every option label and category is translated in every locale", () => {
+    // Labels live in the nested options.* locale trees, keyed by the aria2
+    // option name; a missing entry would render the raw key in the UI.
+    for (const [, bundle] of Object.entries(resources)) {
+      const options = (bundle.translation as Record<string, unknown>)
+        .options as {
+        fields: Record<string, string>;
+        categories: Record<string, string>;
+      };
+      for (const def of aria2Options) {
+        expect(options.fields[def.key]?.length, def.key).toBeGreaterThan(0);
+      }
+      for (const cat of optionCategories) {
+        expect(options.categories[cat.id]?.length, cat.id).toBeGreaterThan(0);
+      }
     }
   });
 
