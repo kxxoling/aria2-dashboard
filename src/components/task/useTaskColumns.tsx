@@ -15,6 +15,18 @@ import { clampPercent, formatBytes, formatEta } from "@/lib/utils.format";
 import type { Aria2Task } from "@/types/aria2";
 
 /**
+ * Column id of the task-name column. The detail dialog opens from this cell
+ * only — value cells (progress, size, speed...) stay click-neutral.
+ */
+export const TASK_NAME_COLUMN_ID = "files";
+
+// The 16px checkbox box alone is a tiny pointer target. An invisible
+// ::before inset by 12px widens the hit area — pseudo-element clicks hit
+// the button itself, so keyboard behavior stays untouched.
+const checkboxHitArea =
+  "relative before:absolute before:-inset-3 before:content-['']";
+
+/**
  * Column definitions for the task table. Memoized on the language so the
  * polling-driven re-renders do not rebuild the array every second.
  *
@@ -35,6 +47,7 @@ export function useTaskColumns() {
             onCheckedChange={(value) =>
               table.toggleAllPageRowsSelected(!!value)
             }
+            className={checkboxHitArea}
             aria-label={t("Select all")}
           />
         ),
@@ -42,7 +55,7 @@ export function useTaskColumns() {
           <Checkbox
             checked={row.getIsSelected()}
             onCheckedChange={(value) => row.toggleSelected(!!value)}
-            onClick={(e) => e.stopPropagation()}
+            className={checkboxHitArea}
             aria-label={t("Select row")}
           />
         ),
@@ -96,7 +109,11 @@ export function useTaskColumns() {
       {
         accessorKey: "totalLength",
         header: t("Size"),
-        cell: ({ row }) => formatBytes(Number(row.getValue("totalLength"))),
+        cell: ({ row }) => (
+          <span className="whitespace-nowrap tabular-nums">
+            {formatBytes(Number(row.getValue("totalLength")))}
+          </span>
+        ),
       },
       {
         accessorKey: "completedLength",
@@ -108,7 +125,7 @@ export function useTaskColumns() {
             total === 0 ? 0 : (completed / total) * 100,
           );
           return (
-            <div className="flex items-center gap-2 min-w-[120px]">
+            <div className="flex items-center gap-2 min-w-[120px] whitespace-nowrap">
               <Progress
                 value={percent}
                 className="h-2 flex-1"
@@ -128,7 +145,7 @@ export function useTaskColumns() {
           const down = Number(row.original.downloadSpeed);
           const up = Number(row.original.uploadSpeed);
           return (
-            <div className="flex flex-col gap-0.5 text-xs tabular-nums leading-none">
+            <div className="flex flex-col gap-0.5 text-xs tabular-nums leading-none whitespace-nowrap">
               <span className="flex items-center gap-1 text-green-600 dark:text-green-500">
                 <ArrowDown className="h-3 w-3 shrink-0" />
                 {down > 0 ? `${formatBytes(down)}/s` : "—"}
@@ -146,11 +163,19 @@ export function useTaskColumns() {
         header: t("ETA"),
         enableSorting: false,
         cell: ({ row }) => {
-          if (row.original.status !== "active") return "—";
+          if (row.original.status !== "active") {
+            return <span className="whitespace-nowrap">—</span>;
+          }
           const total = Number(row.original.totalLength);
           const completed = Number(row.original.completedLength);
           const speed = Number(row.original.downloadSpeed);
-          return speed > 0 ? formatEta((total - completed) / speed) : "—";
+          return speed > 0 ? (
+            <span className="whitespace-nowrap tabular-nums">
+              {formatEta((total - completed) / speed)}
+            </span>
+          ) : (
+            <span className="whitespace-nowrap">—</span>
+          );
         },
       },
       {
@@ -162,7 +187,7 @@ export function useTaskColumns() {
           return (
             <Badge
               variant="outline"
-              className={statusVisual(status).badgeClass}
+              className={`whitespace-nowrap ${statusVisual(status).badgeClass}`}
             >
               {taskStatusLabel(status, i18n.language).label}
             </Badge>

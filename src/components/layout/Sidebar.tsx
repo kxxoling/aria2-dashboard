@@ -4,6 +4,7 @@ import {
   Download,
   FileText,
   PanelLeftClose,
+  Plus,
   Server,
   Settings,
   SlidersHorizontal,
@@ -21,7 +22,9 @@ export function Sidebar({ className }: { className?: string }) {
     <aside
       className={`${sidebarOpen ? "w-64" : "w-16"} border-r bg-card flex flex-col transition-all duration-300 ${className || ""}`}
     >
-      <div className="h-14 flex items-center px-4 border-b font-semibold tracking-tight text-lg mb-4">
+      <div
+        className={`h-14 flex items-center px-4 border-b font-semibold tracking-tight text-lg mb-4 ${sidebarOpen ? "" : "justify-center"}`}
+      >
         <Server className="w-5 h-5 text-primary shrink-0" />
         {sidebarOpen && <span className="ml-2">Aria2 Dashboard</span>}
       </div>
@@ -31,7 +34,7 @@ export function Sidebar({ className }: { className?: string }) {
           {({ isActive }) => (
             <Button
               variant={isActive ? "secondary" : "ghost"}
-              className="w-full justify-start font-medium"
+              className={`w-full font-medium ${sidebarOpen ? "justify-start" : "justify-center"}`}
               size={sidebarOpen ? "default" : "icon"}
             >
               <Download className="w-4 h-4 shrink-0" />
@@ -43,7 +46,7 @@ export function Sidebar({ className }: { className?: string }) {
           {({ isActive }) => (
             <Button
               variant={isActive ? "secondary" : "ghost"}
-              className="w-full justify-start font-medium"
+              className={`w-full font-medium ${sidebarOpen ? "justify-start" : "justify-center"}`}
               size={sidebarOpen ? "default" : "icon"}
             >
               <SlidersHorizontal className="w-4 h-4 shrink-0" />
@@ -57,7 +60,7 @@ export function Sidebar({ className }: { className?: string }) {
           {({ isActive }) => (
             <Button
               variant={isActive ? "secondary" : "ghost"}
-              className="w-full justify-start font-medium"
+              className={`w-full font-medium ${sidebarOpen ? "justify-start" : "justify-center"}`}
               size={sidebarOpen ? "default" : "icon"}
             >
               <FileText className="w-4 h-4 shrink-0" />
@@ -69,7 +72,7 @@ export function Sidebar({ className }: { className?: string }) {
           {({ isActive }) => (
             <Button
               variant={isActive ? "secondary" : "ghost"}
-              className="w-full justify-start"
+              className={`w-full ${sidebarOpen ? "justify-start" : "justify-center"}`}
               size={sidebarOpen ? "default" : "icon"}
             >
               <Settings className="w-4 h-4 shrink-0" />
@@ -82,7 +85,20 @@ export function Sidebar({ className }: { className?: string }) {
       </div>
 
       <div className="p-3 border-t space-y-2">
-        {sidebarOpen && <NewTaskDialog enableHotkey />}
+        <NewTaskDialog enableHotkey>
+          {/* children === null falls back to NewTaskDialog's own labeled
+              trigger; collapsed sidebars get an icon-only trigger instead */}
+          {sidebarOpen ? null : (
+            <Button
+              size="icon"
+              className="w-full"
+              aria-label={t("New Task")}
+              title={t("New Task")}
+            >
+              <Plus className="w-4 h-4 shrink-0" />
+            </Button>
+          )}
+        </NewTaskDialog>
         <Button
           variant="ghost"
           size={sidebarOpen ? "default" : "icon"}

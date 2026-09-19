@@ -18,7 +18,10 @@ import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { EmptyState } from "@/components/EmptyState";
 import { TaskDetailDialog } from "@/components/task/detail/TaskDetailDialog";
 import { getDashboardFeatures } from "@/components/task/tableFeatures";
-import { useTaskColumns } from "@/components/task/useTaskColumns";
+import {
+  TASK_NAME_COLUMN_ID,
+  useTaskColumns,
+} from "@/components/task/useTaskColumns";
 import { Button } from "@/components/ui/button";
 import {
   ContextMenu,
@@ -379,18 +382,31 @@ export function Dashboard() {
               table.getRowModel().rows.map((row) => (
                 <ContextMenu key={row.id}>
                   <ContextMenuTrigger asChild>
-                    <TableRow
-                      className="cursor-pointer hover:bg-muted/50"
-                      onClick={() => setSelectedGid(row.original.gid)}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </TableCell>
-                      ))}
+                    <TableRow>
+                      {row.getVisibleCells().map((cell) => {
+                        // Details open from the task-name cell only, so
+                        // clicking progress/size/speed values does nothing.
+                        const isNameCell =
+                          cell.column.id === TASK_NAME_COLUMN_ID;
+                        return (
+                          <TableCell
+                            key={cell.id}
+                            className={
+                              isNameCell ? "cursor-pointer" : undefined
+                            }
+                            onClick={
+                              isNameCell
+                                ? () => setSelectedGid(row.original.gid)
+                                : undefined
+                            }
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </TableCell>
+                        );
+                      })}
                     </TableRow>
                   </ContextMenuTrigger>
                   <ContextMenuContent>

@@ -68,9 +68,10 @@ test.describe("Aria2 settings page", () => {
 test.describe("task detail", () => {
   test("opens with overview and tabs for a real BT task", async ({ page }) => {
     await page.goto("/");
-    // The seeded BT task from real fixtures
+    // The seeded BT task from real fixtures — the detail dialog opens from
+    // the task-name cell (td #1, after the select checkbox column)
     const row = page.locator("tr", { hasText: "ubuntu" }).first();
-    await row.click();
+    await row.locator("td").nth(1).click();
 
     await expect(page.getByRole("dialog")).toBeVisible();
     await expect(page.getByRole("tab", { name: "Overview" })).toBeVisible();
@@ -85,7 +86,12 @@ test.describe("task detail", () => {
 
   test("task options tab shows real task option values", async ({ page }) => {
     await page.goto("/");
-    await page.locator("tr", { hasText: "ubuntu" }).first().click();
+    await page
+      .locator("tr", { hasText: "ubuntu" })
+      .first()
+      .locator("td")
+      .nth(1)
+      .click();
     await page.getByRole("tab", { name: "Task Options" }).click();
     await expect(
       page.getByText("Splits (connections per download)"),
