@@ -83,6 +83,8 @@ export const pt = {
     Discard: "Descartar",
     "Save Changes": "Salvar alterações",
     "Aria2 settings saved": "Configurações do Aria2 salvas",
+    "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
+      "Apenas URLs de tracker separadas por vírgula são suportadas (sem quebras de linha ou espaços)",
     "Comma-separated tracker URLs (line breaks are not supported)":
       "URLs de tracker separadas por vírgula (quebras de linha não são suportadas)",
     "Advanced Options": "Opções avançadas",

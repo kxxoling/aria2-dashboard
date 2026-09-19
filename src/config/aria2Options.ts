@@ -50,6 +50,12 @@ export interface Aria2OptionDef {
   suffix?: { en: string; zh: string };
   /** Where this definition is used; global settings page shows everything. */
   showIn?: OptionSurface[];
+  /**
+   * Marks aria2 list options. aria2 parses these as comma-separated only —
+   * the zod validation in optionValidation.ts uses this to reject e.g.
+   * newline-separated tracker pastes before they silently break the list.
+   */
+  listFormat?: "comma";
 }
 
 export interface OptionCategoryMeta {
@@ -69,6 +75,10 @@ export const optionCategories: OptionCategoryMeta[] = [
 ];
 
 const both = (v: string) => ({ en: v, zh: v });
+
+export function findOptionDef(key: string): Aria2OptionDef | undefined {
+  return aria2Options.find((def) => def.key === key);
+}
 
 export const aria2Options: Aria2OptionDef[] = [
   // ---------- basic ----------
@@ -352,12 +362,14 @@ export const aria2Options: Aria2OptionDef[] = [
     category: "bt",
     placeholder: "Comma-separated tracker URLs (line breaks are not supported)",
     showIn: ["global", "new-task"],
+    listFormat: "comma",
   },
   {
     key: "bt-exclude-tracker",
     label: { en: "Excluded trackers", zh: "排除的 tracker" },
     type: "text",
     category: "bt",
+    listFormat: "comma",
   },
   {
     key: "enable-dht",

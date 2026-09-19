@@ -83,6 +83,8 @@ export const es = {
     Discard: "Descartar",
     "Save Changes": "Guardar cambios",
     "Aria2 settings saved": "Ajustes de Aria2 guardados",
+    "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
+      "Solo se admiten URLs de tracker separadas por comas (sin saltos de línea ni espacios)",
     "Comma-separated tracker URLs (line breaks are not supported)":
       "URLs de tracker separadas por comas (los saltos de línea no están soportados)",
     "Advanced Options": "Opciones avanzadas",

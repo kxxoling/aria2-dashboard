@@ -83,6 +83,8 @@ export const ru = {
     Discard: "Отменить",
     "Save Changes": "Сохранить изменения",
     "Aria2 settings saved": "Настройки Aria2 сохранены",
+    "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
+      "Поддерживаются только URL трекеров через запятую (без переносов строк и пробелов)",
     "Comma-separated tracker URLs (line breaks are not supported)":
       "URL трекеров через запятую (переносы строк не поддерживаются)",
     "Advanced Options": "Дополнительные параметры",

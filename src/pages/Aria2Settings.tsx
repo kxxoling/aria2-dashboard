@@ -20,6 +20,7 @@ import {
   optionCategories,
   pickLabel,
 } from "@/config/aria2Options";
+import { validateOptionValue } from "@/config/optionValidation";
 
 /**
  * The settings editor — the single aria2 options UI, embedded as the
@@ -35,6 +36,8 @@ export function Aria2SettingsPanel() {
   const [activeCategory, setActiveCategory] = useState<string>("");
   /** Local edits: key -> new value. Diffed against server values on save. */
   const [edits, setEdits] = useState<Record<string, string>>({});
+  /** Validation errors by key, shown inline under the fields. */
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const {
     data: options,
@@ -84,9 +87,23 @@ export function Aria2SettingsPanel() {
   };
 
   const handleSave = () => {
+    const fieldErrors: Record<string, string> = {};
     const changes: Record<string, string> = {};
     for (const key of dirtyKeys) {
-      changes[key] = edits[key];
+      // Schema-level zod validation (e.g. tracker lists must be
+      // comma-separated — aria2 would silently break on anything else).
+      const error = validateOptionValue(key, edits[key], t);
+      if (error) fieldErrors[key] = error;
+      else changes[key] = edits[key];
+    }
+    setErrors(fieldErrors);
+    if (Object.keys(fieldErrors).length > 0) {
+      requestAnimationFrame(() => {
+        document
+          .getElementById(`aria2-option-${Object.keys(fieldErrors)[0]}`)
+          ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      return;
     }
     if (Object.keys(changes).length === 0) return;
     saveMutation.mutate(changes);
@@ -180,12 +197,19 @@ export function Aria2SettingsPanel() {
                             def={def}
                             value={current(def.key)}
                             dirty={dirtyKeys.includes(def.key)}
-                            onChange={(value) =>
+                            error={errors[def.key]}
+                            onChange={(value) => {
                               setEdits((prev) => ({
                                 ...prev,
                                 [def.key]: value,
-                              }))
-                            }
+                              }));
+                              setErrors((prev) => {
+                                if (!(def.key in prev)) return prev;
+                                const next = { ...prev };
+                                delete next[def.key];
+                                return next;
+                              });
+                            }}
                           />
                         ))}
                   </AccordionContent>
@@ -206,7 +230,10 @@ export function Aria2SettingsPanel() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setEdits({})}
+              onClick={() => {
+                setEdits({});
+                setErrors({});
+              }}
               disabled={saveMutation.isPending}
             >
               <RotateCcw className="mr-1.5 h-4 w-4" />
