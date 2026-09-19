@@ -21,6 +21,7 @@ import {
   optionCategories,
   pickLabel,
 } from "@/config/aria2Options";
+import { validateOptionValue } from "@/config/optionValidation";
 import { useAppStore } from "@/store";
 
 export function NewTaskDialog({
@@ -38,6 +39,8 @@ export function NewTaskDialog({
   const [open, setOpen] = useState(false);
   const [urls, setUrls] = useState("");
   const [showAdvanced, setShowAdvanced] = useState(false);
+  /** Validation errors for advanced options, shown inline on the fields. */
+  const [optionErrors, setOptionErrors] = useState<Record<string, string>>({});
   const [taskOptions, setTaskOptions] = useState<Record<string, string>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { t, i18n } = useTranslation();
@@ -76,15 +79,36 @@ export function NewTaskDialog({
     return options;
   };
 
+  /** Schema violations among the advanced options, keyed by option key. */
+  const collectOptionErrors = () => {
+    const errors: Record<string, string> = {};
+    for (const [key, value] of Object.entries(taskOptions)) {
+      const error = validateOptionValue(key, value, t);
+      if (error) errors[key] = error;
+    }
+    return errors;
+  };
+
   const resetForm = () => {
     setUrls("");
     setTaskOptions({});
+    setOptionErrors({});
     setShowAdvanced(false);
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
+
+    const errors = collectOptionErrors();
+    if (Object.keys(errors).length > 0) {
+      setOptionErrors(errors);
+      // the fields carrying the errors live in the advanced section
+      setShowAdvanced(true);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
+    setOptionErrors({});
 
     const options = collectOptions();
     // BT output names come from the torrent itself; `out` is HTTP-only.
@@ -135,6 +159,15 @@ export function NewTaskDialog({
       .filter((line) => line.length > 0);
 
     if (urlList.length === 0) return;
+
+    const errors = collectOptionErrors();
+    if (Object.keys(errors).length > 0) {
+      setOptionErrors(errors);
+      // the fields carrying the errors live in the advanced section
+      setShowAdvanced(true);
+      return;
+    }
+    setOptionErrors({});
 
     const options = collectOptions();
 
@@ -218,12 +251,19 @@ export function NewTaskDialog({
                       def={def}
                       value={taskOptions[def.key] ?? ""}
                       dirty={false}
-                      onChange={(value) =>
+                      error={optionErrors[def.key]}
+                      onChange={(value) => {
                         setTaskOptions((prev) => ({
                           ...prev,
                           [def.key]: value,
-                        }))
-                      }
+                        }));
+                        setOptionErrors((prev) => {
+                          if (!(def.key in prev)) return prev;
+                          const next = { ...prev };
+                          delete next[def.key];
+                          return next;
+                        });
+                      }}
                     />
                   ))}
                 </div>

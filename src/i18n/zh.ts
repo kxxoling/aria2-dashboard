@@ -82,6 +82,10 @@ export const zh = {
     Discard: "放弃更改",
     "Save Changes": "保存更改",
     "Aria2 settings saved": "Aria2 设置已保存",
+    "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
+      "仅支持逗号分隔的 tracker URL（不能包含换行或空格）",
+    "Comma-separated tracker URLs (line breaks are not supported)":
+      "逗号分隔的 tracker URL（不支持换行）",
     "Advanced Options": "高级选项",
     Overview: "概览",
     Peers: "节点",

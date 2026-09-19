@@ -17,21 +17,24 @@ export function OptionField({
   value,
   dirty,
   disabled,
+  error,
   onChange,
 }: {
   def: Aria2OptionDef;
   value: string;
   dirty: boolean;
   disabled?: boolean;
+  /** Validation message shown as an inline form error below the control. */
+  error?: string | null;
   onChange: (value: string) => void;
 }) {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const id = useMemo(() => `aria2-option-${def.key}`, [def.key]);
   const inputDisabled = disabled || def.readonly;
-  const placeholder = def.placeholder
-    ? pickLabel(def.placeholder, lang)
-    : undefined;
+  // Placeholders are English source strings acting as i18n keys; untranslated
+  // technical hints (paths, URL patterns) fall back to the key itself.
+  const placeholder = def.placeholder ? t(def.placeholder) : undefined;
   const suffix = def.suffix ? pickLabel(def.suffix, lang) : undefined;
   // aria2 reports byte counts for size options; render read-only ones
   // human-readable (editable fields keep the raw value to avoid fight the user).
@@ -43,9 +46,11 @@ export function OptionField({
   return (
     <div
       className={`grid gap-1.5 rounded-md border p-3 transition-colors md:grid-cols-[minmax(160px,240px)_1fr] md:items-start md:gap-4 ${
-        dirty
-          ? "border-primary/40 bg-primary/5"
-          : "border-transparent hover:border-border"
+        error
+          ? "border-destructive/40 bg-destructive/5"
+          : dirty
+            ? "border-primary/40 bg-primary/5"
+            : "border-transparent hover:border-border"
       }`}
     >
       <div className="flex min-w-0 flex-col gap-0.5 pt-2">
@@ -60,67 +65,79 @@ export function OptionField({
         </code>
       </div>
 
-      <div className="flex items-center gap-2">
-        <div className="flex-1">
-          {def.type === "boolean" ? (
-            <Checkbox
-              id={id}
-              checked={value === "true"}
-              disabled={inputDisabled}
-              onCheckedChange={(v) => onChange(v ? "true" : "false")}
-            />
-          ) : def.type === "select" ? (
-            <select
-              id={id}
-              value={value}
-              disabled={inputDisabled}
-              onChange={(e) => onChange(e.target.value)}
-              className="h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {def.choices?.map((choice) => (
-                <option key={choice} value={choice}>
-                  {choice}
-                </option>
-              ))}
-            </select>
-          ) : def.type === "text" ? (
-            <Textarea
-              id={id}
-              value={value}
-              disabled={inputDisabled}
-              placeholder={placeholder}
-              onChange={(e) => onChange(e.target.value)}
-              rows={Math.min(6, Math.max(2, value.split("\n").length))}
-              className="font-mono text-xs"
-            />
-          ) : (
-            <Input
-              id={id}
-              type={def.type === "password" ? "password" : "text"}
-              inputMode={def.type === "number" ? "numeric" : undefined}
-              value={humanSize ?? value}
-              disabled={inputDisabled || humanSize !== null}
-              placeholder={placeholder}
-              onChange={(e) => onChange(e.target.value)}
-              className="font-mono text-sm"
-            />
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-center gap-2">
+          <div className="flex-1">
+            {def.type === "boolean" ? (
+              <Checkbox
+                id={id}
+                checked={value === "true"}
+                disabled={inputDisabled}
+                aria-invalid={error ? true : undefined}
+                onCheckedChange={(v) => onChange(v ? "true" : "false")}
+              />
+            ) : def.type === "select" ? (
+              <select
+                id={id}
+                value={value}
+                disabled={inputDisabled}
+                aria-invalid={error ? true : undefined}
+                onChange={(e) => onChange(e.target.value)}
+                className="h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {def.choices?.map((choice) => (
+                  <option key={choice} value={choice}>
+                    {choice}
+                  </option>
+                ))}
+              </select>
+            ) : def.type === "text" ? (
+              <Textarea
+                id={id}
+                value={value}
+                disabled={inputDisabled}
+                placeholder={placeholder}
+                aria-invalid={error ? true : undefined}
+                onChange={(e) => onChange(e.target.value)}
+                rows={Math.min(6, Math.max(2, value.split("\n").length))}
+                className="font-mono text-xs"
+              />
+            ) : (
+              <Input
+                id={id}
+                type={def.type === "password" ? "password" : "text"}
+                inputMode={def.type === "number" ? "numeric" : undefined}
+                value={humanSize ?? value}
+                disabled={inputDisabled || humanSize !== null}
+                placeholder={placeholder}
+                aria-invalid={error ? true : undefined}
+                onChange={(e) => onChange(e.target.value)}
+                className="font-mono text-sm"
+              />
+            )}
+          </div>
+
+          {suffix && !dirty && (
+            <span className="hidden shrink-0 text-xs text-muted-foreground lg:inline">
+              {suffix}
+            </span>
+          )}
+          {dirty && !error && (
+            <span className="shrink-0 text-xs font-medium text-primary">
+              {t("Modified")}
+            </span>
+          )}
+          {def.readonly && (
+            <span className="shrink-0 rounded bg-muted px-1.5 py-0.5 text-[10px] text-muted-foreground">
+              {t("Read only")}
+            </span>
           )}
         </div>
 
-        {suffix && !dirty && (
-          <span className="hidden shrink-0 text-xs text-muted-foreground lg:inline">
-            {suffix}
-          </span>
-        )}
-        {dirty && (
-          <span className="shrink-0 text-xs font-medium text-primary">
-            {t("Modified")}
-          </span>
-        )}
-        {def.readonly && (
-          <span className="shrink-0 rounded bg-muted px-1.5 py-0.5 text-[10px] text-muted-foreground">
-            {t("Read only")}
-          </span>
+        {error && (
+          <p role="alert" className="text-xs text-destructive">
+            {error}
+          </p>
         )}
       </div>
     </div>
