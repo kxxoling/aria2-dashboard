@@ -1,6 +1,10 @@
 /** 繁體中文（台灣用語） */
 export const zhTW = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "日誌取得失敗",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {
@@ -227,6 +231,10 @@ export const zhTW = {
     Discard: "放棄變更",
     "Save Changes": "儲存變更",
     "Aria2 settings saved": "Aria2 設定已儲存",
+    "The built-in log view is provided by the all-in-one Docker image (nginx serves aria2's log file at /aria2-log). For other deployments, start aria2 with --log and expose the file through your reverse proxy.":
+      "內建日誌檢視由 all-in-one Docker 映像檔提供（nginx 在 /aria2-log 路徑公開 aria2 的日誌檔案）。其他部署方式請用 --log 啟動 aria2，並透過反向代理公開該檔案。",
+    "Select all": "全選",
+    "Select row": "選取此列",
     "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
       "僅支援逗號分隔的 tracker URL（不能包含換行或空格）",
     "Comma-separated tracker URLs (line breaks are not supported)":

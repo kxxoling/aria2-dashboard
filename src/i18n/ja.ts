@@ -1,6 +1,10 @@
 /** 日本語 */
 export const ja = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "ログの取得に失敗しました",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {
@@ -227,6 +231,10 @@ export const ja = {
     Discard: "破棄",
     "Save Changes": "変更を保存",
     "Aria2 settings saved": "Aria2 設定を保存しました",
+    "The built-in log view is provided by the all-in-one Docker image (nginx serves aria2's log file at /aria2-log). For other deployments, start aria2 with --log and expose the file through your reverse proxy.":
+      "内蔵ログビューは all-in-one Docker イメージが提供します（nginx が /aria2-log で aria2 のログファイルを配信）。それ以外の環境では、--log を付けて aria2 を起動し、リバースプロキシでそのファイルを公開してください。",
+    "Select all": "すべて選択",
+    "Select row": "この行を選択",
     "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
       "カンマ区切りのトラッカーURLのみ使用できます（改行や空白は不可）",
     "Comma-separated tracker URLs (line breaks are not supported)":

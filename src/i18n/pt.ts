@@ -1,6 +1,10 @@
 /** Português */
 export const pt = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "Falha ao buscar o log",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {
@@ -228,6 +232,10 @@ export const pt = {
     Discard: "Descartar",
     "Save Changes": "Salvar alterações",
     "Aria2 settings saved": "Configurações do Aria2 salvas",
+    "The built-in log view is provided by the all-in-one Docker image (nginx serves aria2's log file at /aria2-log). For other deployments, start aria2 with --log and expose the file through your reverse proxy.":
+      "A visualização de logs integrada é fornecida pela imagem Docker all-in-one (o nginx serve o arquivo de log do aria2 em /aria2-log). Para outras implantações, inicie o aria2 com --log e exponha o arquivo pelo seu proxy reverso.",
+    "Select all": "Selecionar tudo",
+    "Select row": "Selecionar linha",
     "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
       "Apenas URLs de tracker separadas por vírgula são suportadas (sem quebras de linha ou espaços)",
     "Comma-separated tracker URLs (line breaks are not supported)":

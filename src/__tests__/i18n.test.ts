@@ -7,6 +7,8 @@
  * flattened to dot paths before comparing so both shapes are checked.
  */
 
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import { resources } from "@/i18n";
 
@@ -52,4 +54,48 @@ describe("i18n translation resources", () => {
       }
     });
   }
+});
+
+describe("static t() key coverage", () => {
+  /**
+   * Every literal t("...") key in the source must exist in the English
+   * bundle. A key that never lands there renders as its own English text in
+   * EVERY language (silent fallback) — exactly how the logs-unavailable
+   * paragraph shipped untranslated once. The per-locale parity tests above
+   * cannot catch this, because no locale has the key at all.
+   */
+  test("every static key used in components exists in the en bundle", () => {
+    const sourceFiles: string[] = [];
+    const walk = (dir: string) => {
+      for (const name of readdirSync(dir)) {
+        const path = join(dir, name);
+        if (statSync(path).isDirectory()) {
+          walk(path);
+        } else if (/\.tsx?$/.test(path)) {
+          sourceFiles.push(path);
+        }
+      }
+    };
+    walk("src");
+    const scanned = sourceFiles.filter(
+      (f) =>
+        !f.includes(join("src", "i18n")) &&
+        !f.includes("__tests__") &&
+        !/\.test\./.test(f),
+    );
+
+    const used = new Map<string, string>();
+    for (const file of scanned) {
+      for (const match of readFileSync(file, "utf8").matchAll(
+        /\bt\(\s*(["'])((?:[^\\]|\\.)*?)\1/g,
+      )) {
+        const key = match[2];
+        if (key && !key.includes("${")) used.set(key, file);
+      }
+    }
+    expect(used.size).toBeGreaterThan(50); // sanity: the scan found real usage
+
+    const missing = [...used.entries()].filter(([key]) => !enRecord[key]);
+    expect(missing, "keys used in code but missing from en.ts").toEqual([]);
+  });
 });

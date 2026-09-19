@@ -1,6 +1,10 @@
 /** Español */
 export const es = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "Error al obtener el registro",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {
@@ -229,6 +233,10 @@ export const es = {
     Discard: "Descartar",
     "Save Changes": "Guardar cambios",
     "Aria2 settings saved": "Ajustes de Aria2 guardados",
+    "The built-in log view is provided by the all-in-one Docker image (nginx serves aria2's log file at /aria2-log). For other deployments, start aria2 with --log and expose the file through your reverse proxy.":
+      "La vista de registros integrada la proporciona la imagen todo-en-uno de Docker (nginx sirve el archivo de registro de aria2 en /aria2-log). Para otros despliegues, inicia aria2 con --log y expón el archivo mediante tu proxy inverso.",
+    "Select all": "Seleccionar todo",
+    "Select row": "Seleccionar fila",
     "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
       "Solo se admiten URLs de tracker separadas por comas (sin saltos de línea ni espacios)",
     "Comma-separated tracker URLs (line breaks are not supported)":

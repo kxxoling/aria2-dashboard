@@ -1,6 +1,10 @@
 /** Русский */
 export const ru = {
   translation: {
+    // Log viewer
+    logs: {
+      fetchFailed: "Не удалось получить журнал",
+    },
     // Task status labels shown in badges and the detail dialog
     tasks: {
       statuses: {
@@ -229,6 +233,10 @@ export const ru = {
     Discard: "Отменить",
     "Save Changes": "Сохранить изменения",
     "Aria2 settings saved": "Настройки Aria2 сохранены",
+    "The built-in log view is provided by the all-in-one Docker image (nginx serves aria2's log file at /aria2-log). For other deployments, start aria2 with --log and expose the file through your reverse proxy.":
+      "Встроенный просмотр журнала предоставляется образом all-in-one (nginx отдаёт файл журнала aria2 по пути /aria2-log). Для других развёртываний запустите aria2 с --log и откройте файл через обратный прокси.",
+    "Select all": "Выбрать всё",
+    "Select row": "Выбрать строку",
     "Only comma-separated tracker URLs are supported (no line breaks or spaces)":
       "Поддерживаются только URL трекеров через запятую (без переносов строк и пробелов)",
     "Comma-separated tracker URLs (line breaks are not supported)":
