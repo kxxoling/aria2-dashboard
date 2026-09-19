@@ -2,8 +2,8 @@
  * 路由配置
  *
  * / → Tasks（Dashboard）
- * /settings → 连接设置
- * /aria2-settings → Aria2 设置
+ * /settings → 设置页（界面 / 连接 / Aria2 / 日志 Tabs；?tab= 深链并同步）
+ * /aria2-settings → 旧地址，重定向到 /settings?tab=aria2
  *
  * Uses hash history: the app is deployed on plain static hosts (object
  * storage, file servers, GitHub Pages without SPA fallback) where deep
@@ -18,9 +18,9 @@ import {
   createRoute,
   createRouter,
   Outlet,
+  redirect,
 } from "@tanstack/react-router";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { Aria2Settings } from "@/pages/Aria2Settings";
 import { Dashboard } from "@/pages/Dashboard";
 import { Logs } from "@/pages/Logs";
 import { Settings } from "@/pages/Settings";
@@ -42,13 +42,19 @@ const tasksRoute = createRoute({
 const settingsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/settings",
+  validateSearch: (search: Record<string, unknown>): { tab?: string } => ({
+    tab: typeof search.tab === "string" ? search.tab : undefined,
+  }),
   component: Settings,
 });
 
+// Kept as a redirect so old deep links (bookmarks, docs) keep working.
 const aria2SettingsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/aria2-settings",
-  component: Aria2Settings,
+  beforeLoad: () => {
+    throw redirect({ to: "/settings", search: { tab: "aria2" } });
+  },
 });
 
 const logsRoute = createRoute({

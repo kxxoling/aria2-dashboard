@@ -170,7 +170,11 @@ export function Dashboard() {
         <div className="flex items-center gap-2 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
           <WifiOff className="h-4 w-4 shrink-0" />
           <span>{t("Cannot connect to Aria2. Check your settings.")}</span>
-          <Link to="/settings" className="ml-auto underline underline-offset-2">
+          <Link
+            to="/settings"
+            search={{ tab: "connection" }}
+            className="ml-auto underline underline-offset-2"
+          >
             {t("Settings")}
           </Link>
         </div>
