@@ -82,6 +82,8 @@ export const zhTW = {
     Discard: "放棄變更",
     "Save Changes": "儲存變更",
     "Aria2 settings saved": "Aria2 設定已儲存",
+    "Comma-separated tracker URLs (line breaks are not supported)":
+      "逗號分隔的 tracker URL（不支援換行）",
     "Advanced Options": "進階選項",
     Overview: "總覽",
     Peers: "節點",

@@ -82,6 +82,8 @@ export const ja = {
     Discard: "破棄",
     "Save Changes": "変更を保存",
     "Aria2 settings saved": "Aria2 設定を保存しました",
+    "Comma-separated tracker URLs (line breaks are not supported)":
+      "カンマ区切りのトラッカーURLを入力してください（改行は使用できません）",
     "Advanced Options": "詳細オプション",
     Overview: "概要",
     Peers: "ピア",

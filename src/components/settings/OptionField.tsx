@@ -29,9 +29,9 @@ export function OptionField({
   const lang = i18n.language;
   const id = useMemo(() => `aria2-option-${def.key}`, [def.key]);
   const inputDisabled = disabled || def.readonly;
-  const placeholder = def.placeholder
-    ? pickLabel(def.placeholder, lang)
-    : undefined;
+  // Placeholders are English source strings acting as i18n keys; untranslated
+  // technical hints (paths, URL patterns) fall back to the key itself.
+  const placeholder = def.placeholder ? t(def.placeholder) : undefined;
   const suffix = def.suffix ? pickLabel(def.suffix, lang) : undefined;
   // aria2 reports byte counts for size options; render read-only ones
   // human-readable (editable fields keep the raw value to avoid fight the user).

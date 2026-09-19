@@ -82,6 +82,8 @@ export const ko = {
     Discard: "버리기",
     "Save Changes": "변경 사항 저장",
     "Aria2 settings saved": "Aria2 설정이 저장되었습니다",
+    "Comma-separated tracker URLs (line breaks are not supported)":
+      "쉼표로 구분된 트래커 URL을 입력하세요 (줄바꿈은 지원되지 않음)",
     "Advanced Options": "고급 옵션",
     Overview: "개요",
     Peers: "피어",

@@ -40,7 +40,12 @@ export interface Aria2OptionDef {
   sizeFormat?: boolean;
   /** Allowed values for select fields. */
   choices?: string[];
-  placeholder?: { en: string; zh: string };
+  /**
+   * Input hint. An English source string used as the i18n key — OptionField
+   * renders it through i18next, so locales translate it like any other UI
+   * string (technical hints without translations fall back to the key).
+   */
+  placeholder?: string;
   /** Unit hint, e.g. "MiB/s" or seconds. */
   suffix?: { en: string; zh: string };
   /** Where this definition is used; global settings page shows everything. */
@@ -72,7 +77,7 @@ export const aria2Options: Aria2OptionDef[] = [
     label: { en: "Download directory", zh: "下载目录" },
     type: "string",
     category: "basic",
-    placeholder: { en: "/downloads", zh: "/downloads" },
+    placeholder: "/downloads",
     showIn: ["global", "new-task"],
   },
   {
@@ -100,7 +105,6 @@ export const aria2Options: Aria2OptionDef[] = [
     label: { en: "Log file", zh: "日志文件" },
     type: "string",
     category: "basic",
-    placeholder: both(""),
   },
   {
     key: "log-level",
@@ -206,7 +210,7 @@ export const aria2Options: Aria2OptionDef[] = [
     label: { en: "Proxy (all protocols)", zh: "代理（全部协议）" },
     type: "string",
     category: "http-ftp",
-    placeholder: both("[http://][user:pass@]host[:port]"),
+    placeholder: "[http://][user:pass@]host[:port]",
     showIn: ["global", "new-task", "task-option"],
   },
   {
@@ -260,7 +264,7 @@ export const aria2Options: Aria2OptionDef[] = [
     label: { en: "Custom headers", zh: "自定义请求头" },
     type: "text",
     category: "http",
-    placeholder: both("Header1: value1\nHeader2: value2"),
+    placeholder: "Header1: value1\nHeader2: value2",
     showIn: ["global", "new-task"],
   },
   {
@@ -346,10 +350,7 @@ export const aria2Options: Aria2OptionDef[] = [
     label: { en: "BT tracker servers", zh: "BT tracker 服务器" },
     type: "text",
     category: "bt",
-    placeholder: {
-      en: "One tracker URL per line, comma separated also works",
-      zh: "每行一个 tracker，也可用逗号分隔",
-    },
+    placeholder: "Comma-separated tracker URLs (line breaks are not supported)",
     showIn: ["global", "new-task"],
   },
   {
@@ -537,7 +538,6 @@ export const aria2Options: Aria2OptionDef[] = [
     // Not in changeGlobalOption whitelist — set it via the aria2 launch flag
     // and connect with it from Connection Settings.
     readonly: true,
-    placeholder: both(""),
   },
   {
     key: "enable-rpc",
