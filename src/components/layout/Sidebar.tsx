@@ -4,6 +4,7 @@ import {
   Download,
   FileText,
   PanelLeftClose,
+  Plus,
   Server,
   Settings,
   SlidersHorizontal,
@@ -84,7 +85,20 @@ export function Sidebar({ className }: { className?: string }) {
       </div>
 
       <div className="p-3 border-t space-y-2">
-        {sidebarOpen && <NewTaskDialog enableHotkey />}
+        <NewTaskDialog enableHotkey>
+          {/* children === null falls back to NewTaskDialog's own labeled
+              trigger; collapsed sidebars get an icon-only trigger instead */}
+          {sidebarOpen ? null : (
+            <Button
+              size="icon"
+              className="w-full"
+              aria-label={t("New Task")}
+              title={t("New Task")}
+            >
+              <Plus className="w-4 h-4 shrink-0" />
+            </Button>
+          )}
+        </NewTaskDialog>
         <Button
           variant="ghost"
           size={sidebarOpen ? "default" : "icon"}
