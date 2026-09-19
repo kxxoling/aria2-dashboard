@@ -21,7 +21,9 @@ export function Sidebar({ className }: { className?: string }) {
     <aside
       className={`${sidebarOpen ? "w-64" : "w-16"} border-r bg-card flex flex-col transition-all duration-300 ${className || ""}`}
     >
-      <div className="h-14 flex items-center px-4 border-b font-semibold tracking-tight text-lg mb-4">
+      <div
+        className={`h-14 flex items-center px-4 border-b font-semibold tracking-tight text-lg mb-4 ${sidebarOpen ? "" : "justify-center"}`}
+      >
         <Server className="w-5 h-5 text-primary shrink-0" />
         {sidebarOpen && <span className="ml-2">Aria2 Dashboard</span>}
       </div>
@@ -31,7 +33,7 @@ export function Sidebar({ className }: { className?: string }) {
           {({ isActive }) => (
             <Button
               variant={isActive ? "secondary" : "ghost"}
-              className="w-full justify-start font-medium"
+              className={`w-full font-medium ${sidebarOpen ? "justify-start" : "justify-center"}`}
               size={sidebarOpen ? "default" : "icon"}
             >
               <Download className="w-4 h-4 shrink-0" />
@@ -43,7 +45,7 @@ export function Sidebar({ className }: { className?: string }) {
           {({ isActive }) => (
             <Button
               variant={isActive ? "secondary" : "ghost"}
-              className="w-full justify-start font-medium"
+              className={`w-full font-medium ${sidebarOpen ? "justify-start" : "justify-center"}`}
               size={sidebarOpen ? "default" : "icon"}
             >
               <SlidersHorizontal className="w-4 h-4 shrink-0" />
@@ -57,7 +59,7 @@ export function Sidebar({ className }: { className?: string }) {
           {({ isActive }) => (
             <Button
               variant={isActive ? "secondary" : "ghost"}
-              className="w-full justify-start font-medium"
+              className={`w-full font-medium ${sidebarOpen ? "justify-start" : "justify-center"}`}
               size={sidebarOpen ? "default" : "icon"}
             >
               <FileText className="w-4 h-4 shrink-0" />
@@ -69,7 +71,7 @@ export function Sidebar({ className }: { className?: string }) {
           {({ isActive }) => (
             <Button
               variant={isActive ? "secondary" : "ghost"}
-              className="w-full justify-start"
+              className={`w-full ${sidebarOpen ? "justify-start" : "justify-center"}`}
               size={sidebarOpen ? "default" : "icon"}
             >
               <Settings className="w-4 h-4 shrink-0" />
