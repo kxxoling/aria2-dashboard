@@ -9,8 +9,8 @@ A modern web dashboard and Chrome extension for the
 
 ## Screenshots
 
-<details>
-<summary>Screenshots (click to expand)</summary>
+<details open>
+<summary>Screenshots (click to collapse)</summary>
 
 **Solarized Dark theme** — task list
 
