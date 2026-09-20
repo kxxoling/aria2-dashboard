@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { RotateCcw, Save } from "lucide-react";
 import { useMemo, useState } from "react";
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { aria2Client } from "@/api/aria2";
 import { OptionField } from "@/components/settings/OptionField";
@@ -14,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/ui/toast";
 import {
   getOptionsForCategory,
   type OptionCategory,
@@ -53,9 +53,10 @@ export function Aria2SettingsPanel() {
     onSuccess: async () => {
       setEdits({});
       await queryClient.invalidateQueries({ queryKey: ["globalOption"] });
-      toast.success(t("Aria2 settings saved"));
+      toast.add({ type: "success", title: t("Aria2 settings saved") });
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) =>
+      toast.add({ type: "error", title: error.message }),
   });
 
   const current = (key: string) =>

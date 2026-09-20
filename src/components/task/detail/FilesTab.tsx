@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Save } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { aria2Client } from "@/api/aria2";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
+import { toast } from "@/components/ui/toast";
 import { isTerminalStatus, statusVisual } from "@/lib/taskStatus";
 import { clampPercent, formatBytes } from "@/lib/utils.format";
 import type { Aria2TaskStatus } from "@/types/aria2";
@@ -45,10 +45,11 @@ export function FilesTab({
         "select-file": indices.join(","),
       }),
     onSuccess: async () => {
-      toast.success(t("File selection updated"));
+      toast.add({ type: "success", title: t("File selection updated") });
       await queryClient.invalidateQueries({ queryKey: ["taskStatus", gid] });
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) =>
+      toast.add({ type: "error", title: error.message }),
   });
 
   const dirty = useMemo(() => {

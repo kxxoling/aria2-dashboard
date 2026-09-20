@@ -1,5 +1,5 @@
 import { RouterProvider } from "@tanstack/react-router";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "@/components/ui/toast";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { useTheme } from "./lib/useTheme";
 import { useTitleSpeed } from "./lib/useTitleSpeed";
@@ -12,7 +12,7 @@ function App() {
   return (
     <ErrorBoundary>
       <RouterProvider router={router} />
-      <Toaster position="bottom-right" />
+      <Toaster />
     </ErrorBoundary>
   );
 }
