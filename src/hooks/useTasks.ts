@@ -16,7 +16,6 @@ export function useTasks() {
     data: activeTasks,
     dataUpdatedAt: activeFetchedAt,
     isLoading: loadingActive,
-    isError: errorActive,
   } = useQuery({
     queryKey: ["activeTasks"],
     queryFn: () => aria2Client.tellActive(),
@@ -92,5 +91,5 @@ export function useTasks() {
     [loadingActive, loadingWaiting, loadingStopped],
   );
 
-  return { tasksMap, loadingMap, errorActive };
+  return { tasksMap, loadingMap };
 }

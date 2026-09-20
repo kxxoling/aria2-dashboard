@@ -189,6 +189,7 @@ export const es = {
     "Test Connection": "Probar conexión",
     Save: "Guardar",
     Connected: "Conectado",
+    Connecting: "Conectando",
     Disconnected: "Desconectado",
     "Connection successful": "Conexión correcta",
     "Connection failed": "Error de conexión",

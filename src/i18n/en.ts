@@ -188,6 +188,7 @@ export const en = {
     "Test Connection": "Test Connection",
     Save: "Save",
     Connected: "Connected",
+    Connecting: "Connecting",
     Disconnected: "Disconnected",
     "Connection successful": "Connection successful",
     "Connection failed": "Connection failed",

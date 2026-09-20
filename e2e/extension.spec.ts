@@ -52,10 +52,11 @@ test.describe("chrome extension popup", () => {
       await page.getByRole("tab", { name: "Connection Settings" }).click();
       await expect(page.getByText("Connection Protocol")).toBeVisible();
 
-      // RPC target is unreachable in the test profile: the dashboard must
-      // surface the error banner rather than silently showing an empty list
+      // RPC target is unreachable in the test profile: after the 3 connect
+      // attempts (3s apart) run out, the status bar must surface the error
+      // rather than silently showing an empty list
       await page.goto(`chrome-extension://${EXTENSION_ID}/popup.html#/`);
-      await page.waitForTimeout(2500);
+      await page.waitForTimeout(9000);
       await expect(page.getByText(/Cannot connect to Aria2/)).toBeVisible();
     } finally {
       await context.close();

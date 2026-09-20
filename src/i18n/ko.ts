@@ -188,6 +188,7 @@ export const ko = {
     "Test Connection": "연결 테스트",
     Save: "저장",
     Connected: "연결됨",
+    Connecting: "연결 중",
     Disconnected: "연결 안 됨",
     "Connection successful": "연결되었습니다",
     "Connection failed": "연결에 실패했습니다",

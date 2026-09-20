@@ -189,6 +189,7 @@ export const ru = {
     "Test Connection": "Проверить соединение",
     Save: "Сохранить",
     Connected: "Подключено",
+    Connecting: "Подключение",
     Disconnected: "Нет подключения",
     "Connection successful": "Соединение установлено",
     "Connection failed": "Ошибка соединения",

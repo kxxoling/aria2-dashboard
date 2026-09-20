@@ -188,6 +188,7 @@ export const zhTW = {
     "Test Connection": "測試連線",
     Save: "儲存",
     Connected: "已連線",
+    Connecting: "連線中",
     Disconnected: "未連線",
     "Connection successful": "連線成功",
     "Connection failed": "連線失敗",

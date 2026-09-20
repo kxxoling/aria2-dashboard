@@ -189,6 +189,7 @@ export const fr = {
     "Test Connection": "Tester la connexion",
     Save: "Enregistrer",
     Connected: "Connecté",
+    Connecting: "Connexion en cours",
     Disconnected: "Déconnecté",
     "Connection successful": "Connexion réussie",
     "Connection failed": "Échec de la connexion",
