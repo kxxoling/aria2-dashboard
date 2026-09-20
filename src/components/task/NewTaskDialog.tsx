@@ -1,7 +1,6 @@
 import { useHotkeys } from "@tanstack/react-hotkeys";
 import { ChevronDown, Plus, Upload } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { aria2Client } from "@/api/aria2";
 import { Collapsible } from "@/components/Collapsible";
@@ -15,6 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/toast";
 import { aria2Options, type OptionCategory } from "@/config/aria2Options";
 import { validateOptionValue } from "@/config/optionValidation";
 import { useAppStore } from "@/store";
@@ -129,10 +129,16 @@ export function NewTaskDialog({
     }
 
     if (successCount > 0) {
-      toast.success(t("Added {{count}} tasks", { count: successCount }));
+      toast.add({
+        type: "success",
+        title: t("Added {{count}} tasks", { count: successCount }),
+      });
     }
     if (failCount > 0) {
-      toast.error(t("Failed to add {{count}} tasks", { count: failCount }));
+      toast.add({
+        type: "error",
+        title: t("Failed to add {{count}} tasks", { count: failCount }),
+      });
     }
     if (successCount > 0) {
       setOpen(false);
@@ -176,10 +182,16 @@ export function NewTaskDialog({
     const succeeded = results.length - failed;
 
     if (succeeded > 0) {
-      toast.success(t("Added {{count}} tasks", { count: succeeded }));
+      toast.add({
+        type: "success",
+        title: t("Added {{count}} tasks", { count: succeeded }),
+      });
     }
     if (failed > 0) {
-      toast.error(t("Failed to add {{count}} tasks", { count: failed }));
+      toast.add({
+        type: "error",
+        title: t("Failed to add {{count}} tasks", { count: failed }),
+      });
     }
     if (succeeded > 0) {
       setOpen(false);

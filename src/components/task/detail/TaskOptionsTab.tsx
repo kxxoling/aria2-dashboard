@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Save } from "lucide-react";
 import { useMemo, useState } from "react";
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { aria2Client } from "@/api/aria2";
 import { OptionField } from "@/components/settings/OptionField";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/ui/toast";
 import { aria2Options } from "@/config/aria2Options";
 
 export function TaskOptionsTab({
@@ -46,9 +46,10 @@ export function TaskOptionsTab({
     onSuccess: async () => {
       setEdits({});
       await queryClient.invalidateQueries({ queryKey: ["taskOption", gid] });
-      toast.success(t("Task options saved"));
+      toast.add({ type: "success", title: t("Task options saved") });
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) =>
+      toast.add({ type: "error", title: error.message }),
   });
 
   if (isLoading) {

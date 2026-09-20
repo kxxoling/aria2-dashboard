@@ -11,7 +11,6 @@ import {
   WifiOff,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { aria2Client } from "@/api/aria2";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
@@ -48,6 +47,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { toast } from "@/components/ui/toast";
 import { type TaskTab, useTasks } from "@/hooks/useTasks";
 import { taskDisplayName } from "@/lib/taskDisplay";
 import { useAppStore } from "@/store";
@@ -142,10 +142,13 @@ export function Dashboard() {
   ) => {
     try {
       await Promise.all(selectedGids.map(action));
-      toast.success(t(messageKey, { count: selectedGids.length }));
+      toast.add({
+        type: "success",
+        title: t(messageKey, { count: selectedGids.length }),
+      });
       setRowSelection({});
     } catch (e) {
-      toast.error((e as Error).message);
+      toast.add({ type: "error", title: (e as Error).message });
     }
   };
 
@@ -193,8 +196,12 @@ export function Dashboard() {
               onClick={() =>
                 aria2Client
                   .pauseAll()
-                  .then(() => toast.success(t("Pause All")))
-                  .catch((e: Error) => toast.error(e.message))
+                  .then(() =>
+                    toast.add({ type: "success", title: t("Pause All") }),
+                  )
+                  .catch((e: Error) =>
+                    toast.add({ type: "error", title: e.message }),
+                  )
               }
             >
               <Pause className="w-4 h-4 mr-2" />
@@ -204,8 +211,12 @@ export function Dashboard() {
               onClick={() =>
                 aria2Client
                   .unpauseAll()
-                  .then(() => toast.success(t("Resume All")))
-                  .catch((e: Error) => toast.error(e.message))
+                  .then(() =>
+                    toast.add({ type: "success", title: t("Resume All") }),
+                  )
+                  .catch((e: Error) =>
+                    toast.add({ type: "error", title: e.message }),
+                  )
               }
             >
               <Play className="w-4 h-4 mr-2" />
@@ -215,8 +226,12 @@ export function Dashboard() {
               onClick={() =>
                 aria2Client
                   .purgeDownloadResult()
-                  .then(() => toast.success(t("Clear Finished")))
-                  .catch((e: Error) => toast.error(e.message))
+                  .then(() =>
+                    toast.add({ type: "success", title: t("Clear Finished") }),
+                  )
+                  .catch((e: Error) =>
+                    toast.add({ type: "error", title: e.message }),
+                  )
               }
             >
               <Trash2 className="w-4 h-4 mr-2" />
@@ -425,7 +440,9 @@ export function Dashboard() {
                         onClick={() =>
                           aria2Client
                             .pause(row.original.gid)
-                            .catch((e: Error) => toast.error(e.message))
+                            .catch((e: Error) =>
+                              toast.add({ type: "error", title: e.message }),
+                            )
                         }
                       >
                         <Pause className="h-4 w-4" />
@@ -438,7 +455,9 @@ export function Dashboard() {
                         onClick={() =>
                           aria2Client
                             .unpause(row.original.gid)
-                            .catch((e: Error) => toast.error(e.message))
+                            .catch((e: Error) =>
+                              toast.add({ type: "error", title: e.message }),
+                            )
                         }
                       >
                         <Play className="h-4 w-4" />
@@ -459,7 +478,9 @@ export function Dashboard() {
                             })
                           : aria2Client
                               .remove(row.original.gid)
-                              .catch((e: Error) => toast.error(e.message))
+                              .catch((e: Error) =>
+                                toast.add({ type: "error", title: e.message }),
+                              )
                       }
                     >
                       <Trash2 className="h-4 w-4" />

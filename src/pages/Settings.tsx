@@ -1,6 +1,5 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { LogsPanel } from "@/components/logs/LogsPanel";
 import { InterfaceSettingsPanel } from "@/components/settings/InterfaceSettingsPanel";
@@ -16,6 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "@/components/ui/toast";
 import {
   type ConnectionType,
   parseRpcUrl,
@@ -95,25 +95,25 @@ function ConnectionSettingsPanel() {
 
   const handleTest = async () => {
     if (!host) {
-      toast.error(t("RPC URL is required"));
+      toast.add({ type: "error", title: t("RPC URL is required") });
       return;
     }
     try {
       await testConnection({ connectionType, ssl, host, secret });
-      toast.success(t("Connection successful"));
+      toast.add({ type: "success", title: t("Connection successful") });
     } catch {
-      toast.error(t("Connection failed"));
+      toast.add({ type: "error", title: t("Connection failed") });
     }
   };
 
   const handleSave = () => {
     if (!host) {
-      toast.error(t("RPC URL is required"));
+      toast.add({ type: "error", title: t("RPC URL is required") });
       return;
     }
     saveConfig(connectionType, ssl, host, secret);
     reset();
-    toast.success(t("Settings saved"));
+    toast.add({ type: "success", title: t("Settings saved") });
   };
 
   const handleProtocolTabChange = (value: string) => {
