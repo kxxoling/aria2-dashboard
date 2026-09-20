@@ -208,6 +208,8 @@ export const ja = {
     "Enter URLs, one per line...": "URL を 1 行に 1 つずつ入力...",
     "Added {{count}} tasks": "{{count}} 件のタスクを追加しました",
     "Task Added": "タスクを追加しました",
+    "Create new task with Aria2 Dashboard":
+      "Aria2 Dashboard で新しいタスクを作成",
     "Failed to add task": "タスクの追加に失敗しました",
     "Failed to add {{count}} tasks": "{{count}} 件のタスクの追加に失敗しました",
     Collapse: "折りたたむ",

@@ -5,6 +5,9 @@ import { extensionStorage } from "./storage";
 
 export type LanguagePreference = "system" | string;
 
+/** chrome.storage/localStorage key the persisted store lives under. */
+export const STORAGE_KEY = "aria2-dashboard-storage";
+
 export interface AppSettings {
   language: LanguagePreference;
   /** Show live rates in the browser tab title. */
@@ -83,7 +86,7 @@ export const useAppStore = create<AppState>()(
         set((state) => ({ settings: { ...state.settings, ...patch } })),
     }),
     {
-      name: "aria2-dashboard-storage",
+      name: STORAGE_KEY,
       storage: createJSONStorage(() => extensionStorage),
     },
   ),

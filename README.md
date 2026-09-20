@@ -76,6 +76,13 @@ Grab `aria2-dashboard-extension-*.zip` from the
 then: `chrome://extensions` → Developer mode → Load unpacked → select the
 unzipped folder. Connect to any aria2 from the in-app settings.
 
+Beyond the dashboard, the extension watches the pages you browse: clicking
+a `magnet:` link or an http(s) link that looks like a downloadable file
+creates an aria2 task in the background — no popup needed — and Chrome
+shows a native notification for success or failure. Right-clicking any
+magnet/http(s)/ftp link also offers **Create new task with Aria2
+Dashboard**.
+
 ## For Developers
 
 ```bash
