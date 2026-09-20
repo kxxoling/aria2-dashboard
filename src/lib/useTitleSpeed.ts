@@ -1,6 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { aria2Client } from "@/api/aria2";
+import { useConnectionStore } from "@/api/connection";
 import { formatBytes } from "@/lib/utils.format";
 import { useAppStore } from "@/store";
 
@@ -14,26 +13,15 @@ export function formatTitleSpeed(down: number, up: number): string {
 /**
  * Renders live rates into the browser tab title:
  * "↓ 1.2 MB/s ↑ 30 KB/s - Aria2 Dashboard" (AriaNg-style), toggleable.
+ * Rates come from the shared connection manager's stats, so this adds no
+ * polling of its own.
  */
 export function useTitleSpeed() {
   const titleSpeedEnabled = useAppStore((s) => s.settings.titleSpeedEnabled);
-  const globalStatInterval = useAppStore((s) => s.settings.globalStatInterval);
-
-  const { data: stats } = useQuery({
-    queryKey: ["globalStat"],
-    queryFn: () => aria2Client.getGlobalStat(),
-    refetchInterval: titleSpeedEnabled
-      ? Math.max(1000, globalStatInterval)
-      : false,
-    enabled: titleSpeedEnabled,
-  });
+  const stats = useConnectionStore((s) => s.stats);
 
   useEffect(() => {
-    if (!titleSpeedEnabled) {
-      document.title = BASE_TITLE;
-      return;
-    }
-    if (!stats) return;
+    if (!titleSpeedEnabled || !stats) return;
     document.title = formatTitleSpeed(
       Number(stats.downloadSpeed || 0),
       Number(stats.uploadSpeed || 0),

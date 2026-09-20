@@ -188,6 +188,7 @@ export const pt = {
     "Test Connection": "Testar conexão",
     Save: "Salvar",
     Connected: "Conectado",
+    Connecting: "Conectando",
     Disconnected: "Desconectado",
     "Connection successful": "Conexão bem-sucedida",
     "Connection failed": "Falha na conexão",

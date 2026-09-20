@@ -1,13 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import { ArrowDown, ArrowUp, ListVideo } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { aria2Client } from "@/api/aria2";
+import { useConnectionStore } from "@/api/connection";
 import { SpeedChart } from "@/components/SpeedChart";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { MAX_SPEED_SAMPLES, useSpeedHistory } from "@/lib/useSpeedHistory";
 import { formatBytes } from "@/lib/utils.format";
-import { useAppStore } from "@/store";
 
 function Sparkline({
   samples,
@@ -51,14 +49,22 @@ function Sparkline({
   );
 }
 
+const PILL_TONE = {
+  connected: "bg-green-500/10 text-green-600 dark:text-green-500",
+  connecting: "bg-amber-500/10 text-amber-600 dark:text-amber-500",
+  disconnected: "bg-red-500/10 text-red-500",
+} as const;
+
+const DOT_TONE = {
+  connected: "bg-green-500 animate-pulse",
+  connecting: "bg-amber-500 animate-pulse",
+  disconnected: "bg-red-500",
+} as const;
+
 export function Header() {
   const { t } = useTranslation();
-  const globalStatInterval = useAppStore((s) => s.settings.globalStatInterval);
-  const { data: stats, isError } = useQuery({
-    queryKey: ["globalStat"],
-    queryFn: () => aria2Client.getGlobalStat(),
-    refetchInterval: globalStatInterval,
-  });
+  const status = useConnectionStore((s) => s.status);
+  const stats = useConnectionStore((s) => s.stats);
 
   const { samples, push } = useSpeedHistory();
   const [chartOpen, setChartOpen] = useState(false);
@@ -85,17 +91,17 @@ export function Header() {
             ref={pillRef}
             type="button"
             onClick={() => setChartOpen((v) => !v)}
-            title={isError ? t("Disconnected") : t("Global speed history")}
-            className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 transition-colors hover:bg-foreground/5 ${
-              isError
-                ? "bg-red-500/10 text-red-500"
-                : "bg-green-500/10 text-green-600 dark:text-green-500"
-            }`}
+            title={
+              status === "connected"
+                ? t("Global speed history")
+                : status === "connecting"
+                  ? t("Connecting")
+                  : t("Disconnected")
+            }
+            className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 transition-colors hover:bg-foreground/5 ${PILL_TONE[status]}`}
           >
             <span
-              className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-                isError ? "bg-red-500" : "bg-green-500 animate-pulse"
-              }`}
+              className={`h-1.5 w-1.5 shrink-0 rounded-full ${DOT_TONE[status]}`}
             />
             <span className="flex items-center gap-0.5 text-xs font-medium tabular-nums whitespace-nowrap">
               <ArrowDown className="h-3 w-3 shrink-0" aria-hidden="true" />
@@ -108,7 +114,11 @@ export function Header() {
             <Sparkline
               samples={samples.map((s) => s.down)}
               className={`hidden sm:block ${
-                isError ? "text-red-400/60" : "text-green-500/70"
+                status === "connected"
+                  ? "text-green-500/70"
+                  : status === "connecting"
+                    ? "text-amber-500/70"
+                    : "text-red-400/60"
               }`}
             />
             <span className="mx-0.5 text-xs opacity-30 select-none">|</span>

@@ -1,15 +1,6 @@
-import { Link } from "@tanstack/react-router";
 import type { RowSelectionState, SortingState } from "@tanstack/react-table";
 import { flexRender, useReactTable } from "@tanstack/react-table";
-import {
-  Info,
-  ListOrdered,
-  Pause,
-  Play,
-  Search,
-  Trash2,
-  WifiOff,
-} from "lucide-react";
+import { Info, ListOrdered, Pause, Play, Search, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { aria2Client } from "@/api/aria2";
@@ -61,7 +52,7 @@ const emptyKey: Record<TaskTab, string> = {
 
 export function Dashboard() {
   const { t } = useTranslation();
-  const { tasksMap, loadingMap, errorActive } = useTasks();
+  const { tasksMap, loadingMap } = useTasks();
   const [tab, setTab] = useState<TaskTab>("active");
   const [selectedGid, setSelectedGid] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -169,19 +160,6 @@ export function Dashboard() {
 
   return (
     <div className="space-y-4">
-      {errorActive && (
-        <div className="flex items-center gap-2 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-          <WifiOff className="h-4 w-4 shrink-0" />
-          <span>{t("Cannot connect to Aria2. Check your settings.")}</span>
-          <Link
-            to="/settings"
-            search={{ tab: "connection" }}
-            className="ml-auto underline underline-offset-2"
-          >
-            {t("Settings")}
-          </Link>
-        </div>
-      )}
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold tracking-tight">{t("Tasks")}</h2>
         <DropdownMenu>

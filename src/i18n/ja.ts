@@ -188,6 +188,7 @@ export const ja = {
     "Test Connection": "接続テスト",
     Save: "保存",
     Connected: "接続済み",
+    Connecting: "接続中",
     Disconnected: "未接続",
     "Connection successful": "接続しました",
     "Connection failed": "接続に失敗しました",

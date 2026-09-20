@@ -188,6 +188,7 @@ export const zh = {
     "Test Connection": "测试连接",
     Save: "保存",
     Connected: "已连接",
+    Connecting: "连接中",
     Disconnected: "未连接",
     "Connection successful": "连接成功",
     "Connection failed": "连接失败",
