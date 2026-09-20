@@ -208,6 +208,7 @@ export const ko = {
     "Enter URLs, one per line...": "URL을 한 줄에 하나씩 입력...",
     "Added {{count}} tasks": "{{count}}개 작업을 추가했습니다",
     "Task Added": "작업이 추가되었습니다",
+    "Create new task with Aria2 Dashboard": "Aria2 Dashboard로 새 작업 만들기",
     "Failed to add task": "작업 추가에 실패했습니다",
     "Failed to add {{count}} tasks": "{{count}}개 작업 추가에 실패했습니다",
     Collapse: "접기",

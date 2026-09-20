@@ -210,6 +210,8 @@ export const fr = {
     "Enter URLs, one per line...": "Saisissez les URL, une par ligne...",
     "Added {{count}} tasks": "{{count}} tâches ajoutées",
     "Task Added": "Tâche ajoutée",
+    "Create new task with Aria2 Dashboard":
+      "Créer une nouvelle tâche avec Aria2 Dashboard",
     "Failed to add task": "Échec de l'ajout de la tâche",
     "Failed to add {{count}} tasks": "Échec de l'ajout de {{count}} tâches",
     Collapse: "Replier",

@@ -210,6 +210,8 @@ export const ru = {
     "Enter URLs, one per line...": "Введите URL, по одному в строке...",
     "Added {{count}} tasks": "Добавлено задач: {{count}}",
     "Task Added": "Задача добавлена",
+    "Create new task with Aria2 Dashboard":
+      "Создать новую задачу в Aria2 Dashboard",
     "Failed to add task": "Не удалось добавить задачу",
     "Failed to add {{count}} tasks": "Не удалось добавить задач: {{count}}",
     Collapse: "Свернуть",

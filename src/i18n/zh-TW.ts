@@ -208,6 +208,7 @@ export const zhTW = {
     "Enter URLs, one per line...": "輸入連結，每行一個...",
     "Added {{count}} tasks": "已新增 {{count}} 個任務",
     "Task Added": "任務已新增",
+    "Create new task with Aria2 Dashboard": "用 Aria2 Dashboard 建立新任務",
     "Failed to add task": "新增任務失敗",
     "Failed to add {{count}} tasks": "新增失敗 {{count}} 個任務",
     Collapse: "收合",

@@ -209,6 +209,8 @@ export const pt = {
     "Enter URLs, one per line...": "Insira as URLs, uma por linha...",
     "Added {{count}} tasks": "{{count}} tarefas adicionadas",
     "Task Added": "Tarefa adicionada",
+    "Create new task with Aria2 Dashboard":
+      "Criar nova tarefa com o Aria2 Dashboard",
     "Failed to add task": "Falha ao adicionar tarefa",
     "Failed to add {{count}} tasks": "Falha ao adicionar {{count}} tarefas",
     Collapse: "Recolher",
