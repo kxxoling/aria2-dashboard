@@ -21,9 +21,10 @@
   "scripts": {
     "dev": "vite",
     "dev:mock": "vite --mode mock",
-    "dev:ext": "plasmo dev",
+    "dev:ext": "bun run icons:gen && plasmo dev",
     "build": "tsc --noEmit && vite build",
-    "build:ext": "plasmo build",
+    "build:ext": "bun run icons:gen && plasmo build",
+    "icons:gen": "bun scripts/generate-icon.ts",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome check --write .",
@@ -33,7 +34,7 @@
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
     "prepare": "husky",
-    "test:ext": "plasmo build && playwright test e2e/extension.spec.ts"
+    "test:ext": "bun run icons:gen && plasmo build && playwright test e2e/extension.spec.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
@@ -80,6 +81,7 @@
     "msw": "^2.15.0",
     "plasmo": "^0.90.5",
     "postcss": "^8.5.28",
+    "sharp": "^0.35.4",
     "tailwindcss": "^3.4.19",
     "typescript": "^7.0.2",
     "vite": "^8.2.2",
