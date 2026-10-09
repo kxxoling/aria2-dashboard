@@ -2,6 +2,7 @@ import { Gauge, Globe2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { normalizeLanguage, SUPPORTED_LANGUAGES } from "@/i18n";
 import { colorSchemes } from "@/lib/colorSchemes";
+import { isExtension } from "@/lib/runtime";
 import { type AppSettings, defaultSettings, useAppStore } from "@/store";
 
 function SettingRow({
@@ -159,7 +160,11 @@ export function InterfaceSettingsPanel() {
 
       <SettingRow
         label={t("Notify when downloads complete")}
-        hint={t("Uses the browser notification API")}
+        hint={
+          isExtension()
+            ? t("Native notification, even when the popup is closed")
+            : t("Browser notification while this page is open")
+        }
       >
         <Toggle
           checked={settings.browserNotification}
@@ -172,6 +177,21 @@ export function InterfaceSettingsPanel() {
           label={t("Notify when downloads complete")}
         />
       </SettingRow>
+
+      {/* Link interception lives in the extension's content script — the
+          web build has no such capability, so its toggle is not shown. */}
+      {isExtension() && (
+        <SettingRow
+          label={t("Intercept download links")}
+          hint={t("Clicking magnet or downloadable links creates tasks")}
+        >
+          <Toggle
+            checked={settings.interceptLinks}
+            onChange={(v) => setSettings({ interceptLinks: v })}
+            label={t("Intercept download links")}
+          />
+        </SettingRow>
+      )}
 
       <SettingRow
         label={t("Confirm before removing tasks")}

@@ -16,6 +16,8 @@ export interface AppSettings {
   browserNotification: boolean;
   /** Ask for confirmation before removing tasks. */
   confirmTaskRemoval: boolean;
+  /** Intercept clicks on magnet/downloadable links (extension). */
+  interceptLinks: boolean;
   /** Global hotkeys (Cmd/Ctrl+K new task). */
   hotkeysEnabled: boolean;
   /** Polling intervals, ms. */
@@ -30,6 +32,7 @@ export const defaultSettings: AppSettings = {
   titleSpeedEnabled: true,
   browserNotification: false,
   confirmTaskRemoval: true,
+  interceptLinks: true,
   hotkeysEnabled: true,
   globalStatInterval: 1000,
   taskListInterval: 2000,

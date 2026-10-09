@@ -208,8 +208,8 @@ export const ja = {
     "Enter URLs, one per line...": "URL を 1 行に 1 つずつ入力...",
     "Added {{count}} tasks": "{{count}} 件のタスクを追加しました",
     "Task Added": "タスクを追加しました",
-    "Download complete": "ダウンロード完了",
-    "Create new task with Aria2 Dashboard": "Aria2 Dashboard で新しいタスクを作成",
+    "Create new task with Aria2 Dashboard":
+      "Aria2 Dashboard で新しいタスクを作成",
     "Failed to add task": "タスクの追加に失敗しました",
     "Failed to add {{count}} tasks": "{{count}} 件のタスクの追加に失敗しました",
     Collapse: "折りたたむ",
@@ -295,7 +295,14 @@ export const ja = {
     "Live download/upload rates in the browser tab":
       "ブラウザタブにリアルタイム速度を表示",
     "Notify when downloads complete": "ダウンロード完了時に通知",
-    "Uses the browser notification API": "ブラウザ通知機能を使用します",
+    "Intercept download links": "ダウンロードリンクを取り込む",
+    "Clicking magnet or downloadable links creates tasks":
+      "magnet やダウンロード用リンクのクリックでタスクを作成",
+    "Download complete": "ダウンロード完了",
+    "Native notification, even when the popup is closed":
+      "ネイティブ通知。ポップを閉じていても有効",
+    "Browser notification while this page is open":
+      "ページを開いている間はブラウザ通知",
     "Confirm before removing tasks": "タスク削除前に確認",
     "Ask before single or batch removal": "単体・一括削除の前に確認します",
     "Keyboard shortcuts": "キーボードショートカット",

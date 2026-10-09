@@ -208,7 +208,6 @@ export const ko = {
     "Enter URLs, one per line...": "URL을 한 줄에 하나씩 입력...",
     "Added {{count}} tasks": "{{count}}개 작업을 추가했습니다",
     "Task Added": "작업이 추가되었습니다",
-    "Download complete": "다운로드 완료",
     "Create new task with Aria2 Dashboard": "Aria2 Dashboard로 새 작업 만들기",
     "Failed to add task": "작업 추가에 실패했습니다",
     "Failed to add {{count}} tasks": "{{count}}개 작업 추가에 실패했습니다",
@@ -295,7 +294,14 @@ export const ko = {
     "Live download/upload rates in the browser tab":
       "브라우저 탭에 실시간 속도 표시",
     "Notify when downloads complete": "다운로드 완료 알림",
-    "Uses the browser notification API": "브라우저 알림 기능을 사용합니다",
+    "Intercept download links": "다운로드 링크 가로채기",
+    "Clicking magnet or downloadable links creates tasks":
+      "magnet 또는 다운로드 링크 클릭 시 작업을 생성합니다",
+    "Download complete": "다운로드 완료",
+    "Native notification, even when the popup is closed":
+      "시스템 알림, 팝업이 닫혀 있어도 작동",
+    "Browser notification while this page is open":
+      "페이지가 열려 있는 동안 브라우저 알림",
     "Confirm before removing tasks": "작업 삭제 전 확인",
     "Ask before single or batch removal": "개별 또는 일괄 삭제 전에 확인합니다",
     "Keyboard shortcuts": "키보드 단축키",

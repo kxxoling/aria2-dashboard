@@ -208,7 +208,6 @@ export const zh = {
     "Enter URLs, one per line...": "输入链接，每行一个...",
     "Added {{count}} tasks": "已添加 {{count}} 个任务",
     "Task Added": "任务已添加",
-    "Download complete": "下载完成",
     "Create new task with Aria2 Dashboard": "用 Aria2 Dashboard 创建新任务",
     "Failed to add task": "添加任务失败",
     "Failed to add {{count}} tasks": "添加失败 {{count}} 个任务",
@@ -294,7 +293,13 @@ export const zh = {
     "Live download/upload rates in the browser tab":
       "浏览器标签页实时显示下载/上传速度",
     "Notify when downloads complete": "下载完成时通知",
-    "Uses the browser notification API": "使用浏览器通知功能",
+    "Intercept download links": "拦截下载链接",
+    "Clicking magnet or downloadable links creates tasks":
+      "点击 magnet 或下载类链接时自动创建任务",
+    "Download complete": "下载完成",
+    "Native notification, even when the popup is closed":
+      "系统原生通知，弹窗未打开也生效",
+    "Browser notification while this page is open": "页面打开时通过浏览器通知",
     "Confirm before removing tasks": "删除任务前确认",
     "Ask before single or batch removal": "单个或批量删除前询问",
     "Keyboard shortcuts": "键盘快捷键",
