@@ -93,7 +93,16 @@
     ]
   },
   "manifest": {
-    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu9QA9PgcHMmI0G0xmJ1TIq9M2/4/QFMDokxxlj16qGwnfs0pt7SGiJxuBhG45glcALQaDtQORom88wshbeEjtkNjIakORZ1mWYLi/S8NUNLa5G82gWkTo06cLTfhLMh0n1HTO/Tsf1+G0xo5CtctYEIHp3e6U4REbxDGcFDrdWTChDiTZxjpO44T/GqpHIi9IDNI1v8XXxxIkwO++nuqGOs2vaCZdKKu9CZAnRcl2MfuFICWUrLRdYydLN6QgsCcL97S8e61ts430/GI1BaMP8wQYrxga2Kf/hTHMJE68l5VIwKecDrsTy74APH6orGlLMDcfNEg+IsK/8PBcVxWNwIDAQAB"
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu9QA9PgcHMmI0G0xmJ1TIq9M2/4/QFMDokxxlj16qGwnfs0pt7SGiJxuBhG45glcALQaDtQORom88wshbeEjtkNjIakORZ1mWYLi/S8NUNLa5G82gWkTo06cLTfhLMh0n1HTO/Tsf1+G0xo5CtctYEIHp3e6U4REbxDGcFDrdWTChDiTZxjpO44T/GqpHIi9IDNI1v8XXxxIkwO++nuqGOs2vaCZdKKu9CZAnRcl2MfuFICWUrLRdYydLN6QgsCcL97S8e61ts430/GI1BaMP8wQYrxga2Kf/hTHMJE68l5VIwKecDrsTy74APH6orGlLMDcfNEg+IsK/8PBcVxWNwIDAQAB",
+    "permissions": [
+      "storage",
+      "notifications",
+      "contextMenus"
+    ],
+    "host_permissions": [
+      "http://*/*",
+      "https://*/*"
+    ]
   },
   "alias": {
     "@tanstack/router-core/isServer": "./src/lib/isBrowser.ts"

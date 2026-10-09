@@ -208,6 +208,7 @@ export const zh = {
     "Enter URLs, one per line...": "输入链接，每行一个...",
     "Added {{count}} tasks": "已添加 {{count}} 个任务",
     "Task Added": "任务已添加",
+    "Create new task with Aria2 Dashboard": "用 Aria2 Dashboard 创建新任务",
     "Failed to add task": "添加任务失败",
     "Failed to add {{count}} tasks": "添加失败 {{count}} 个任务",
     Collapse: "收起",
