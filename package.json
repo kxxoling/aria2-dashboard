@@ -97,7 +97,8 @@
     "permissions": [
       "storage",
       "notifications",
-      "contextMenus"
+      "contextMenus",
+      "alarms"
     ],
     "host_permissions": [
       "http://*/*",

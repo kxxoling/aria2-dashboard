@@ -209,6 +209,7 @@ export const en = {
     "Enter URLs, one per line...": "Enter URLs, one per line...",
     "Added {{count}} tasks": "Added {{count}} tasks",
     "Task Added": "Task Added",
+    "Download complete": "Download complete",
     "Create new task with Aria2 Dashboard": "Create new task with Aria2 Dashboard",
     "Failed to add task": "Failed to add task",
     "Failed to add {{count}} tasks": "Failed to add {{count}} tasks",
