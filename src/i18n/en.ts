@@ -209,6 +209,8 @@ export const en = {
     "Enter URLs, one per line...": "Enter URLs, one per line...",
     "Added {{count}} tasks": "Added {{count}} tasks",
     "Task Added": "Task Added",
+    "Create new task with Aria2 Dashboard":
+      "Create new task with Aria2 Dashboard",
     "Failed to add task": "Failed to add task",
     "Failed to add {{count}} tasks": "Failed to add {{count}} tasks",
     Collapse: "Collapse",
@@ -294,7 +296,14 @@ export const en = {
     "Live download/upload rates in the browser tab":
       "Live download/upload rates in the browser tab",
     "Notify when downloads complete": "Notify when downloads complete",
-    "Uses the browser notification API": "Uses the browser notification API",
+    "Intercept download links": "Intercept download links",
+    "Clicking magnet or downloadable links creates tasks":
+      "Clicking magnet or downloadable links creates tasks",
+    "Download complete": "Download complete",
+    "Native notification, even when the popup is closed":
+      "Native notification, even when the popup is closed",
+    "Browser notification while this page is open":
+      "Browser notification while this page is open",
     "Confirm before removing tasks": "Confirm before removing tasks",
     "Ask before single or batch removal": "Ask before single or batch removal",
     "Keyboard shortcuts": "Keyboard shortcuts",

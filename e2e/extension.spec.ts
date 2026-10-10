@@ -52,10 +52,27 @@ test.describe("chrome extension popup", () => {
       await page.getByRole("tab", { name: "Connection Settings" }).click();
       await expect(page.getByText("Connection Protocol")).toBeVisible();
 
-      // RPC target is unreachable in the test profile: after the 3 connect
-      // attempts (3s apart) run out, the status bar must surface the error
-      // rather than silently showing an empty list
+      // Force an unreachable RPC target so the test does not depend on
+      // whether something happens to listen on localhost:6800. After the 3
+      // connect attempts (3s apart) run out, the status bar must surface
+      // the error rather than silently showing an empty list.
+      await page.evaluate(() => {
+        return new Promise<void>((resolve) => {
+          chrome.storage.local.set(
+            {
+              "aria2-dashboard-storage": JSON.stringify({
+                state: { rpcUrl: "http://127.0.0.1:9/jsonrpc" },
+                version: 0,
+              }),
+            },
+            () => resolve(),
+          );
+        });
+      });
       await page.goto(`chrome-extension://${EXTENSION_ID}/popup.html#/`);
+      // Hash-only navigation does not remount the app — reload so the popup
+      // hydrates from the (now unreachable) saved config.
+      await page.reload();
       await page.waitForTimeout(9000);
       await expect(page.getByText(/Cannot connect to Aria2/)).toBeVisible();
     } finally {

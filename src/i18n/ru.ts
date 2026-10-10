@@ -210,6 +210,8 @@ export const ru = {
     "Enter URLs, one per line...": "Введите URL, по одному в строке...",
     "Added {{count}} tasks": "Добавлено задач: {{count}}",
     "Task Added": "Задача добавлена",
+    "Create new task with Aria2 Dashboard":
+      "Создать новую задачу в Aria2 Dashboard",
     "Failed to add task": "Не удалось добавить задачу",
     "Failed to add {{count}} tasks": "Не удалось добавить задач: {{count}}",
     Collapse: "Свернуть",
@@ -295,7 +297,14 @@ export const ru = {
     "Live download/upload rates in the browser tab":
       "Скорость загрузки и отдачи в реальном времени во вкладке",
     "Notify when downloads complete": "Уведомлять о завершении загрузок",
-    "Uses the browser notification API": "Использует API уведомлений браузера",
+    "Intercept download links": "Перехватывать ссылки на загрузки",
+    "Clicking magnet or downloadable links creates tasks":
+      "Клик по magnet- или скачиваемой ссылке создаёт задачу",
+    "Download complete": "Загрузка завершена",
+    "Native notification, even when the popup is closed":
+      "Системное уведомление, работает и без попапа",
+    "Browser notification while this page is open":
+      "Уведомление браузера, пока страница открыта",
     "Confirm before removing tasks": "Подтверждать удаление задач",
     "Ask before single or batch removal":
       "Спрашивать перед удалением одной или нескольких задач",

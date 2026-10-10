@@ -37,6 +37,8 @@ export interface Aria2Task {
   followedBy?: string[];
   following?: string;
   belongsTo?: string;
+  /** Unix epoch seconds; present on stopped tasks that finished downloading. */
+  completionDate?: string;
   dir: string;
   files?: Aria2File[];
   bittorrent?: unknown;

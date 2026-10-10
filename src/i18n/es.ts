@@ -210,6 +210,8 @@ export const es = {
     "Enter URLs, one per line...": "Introduce las URL, una por línea...",
     "Added {{count}} tasks": "{{count}} tareas añadidas",
     "Task Added": "Tarea añadida",
+    "Create new task with Aria2 Dashboard":
+      "Crear nueva tarea con Aria2 Dashboard",
     "Failed to add task": "Error al añadir la tarea",
     "Failed to add {{count}} tasks": "Error al añadir {{count}} tareas",
     Collapse: "Contraer",
@@ -295,8 +297,14 @@ export const es = {
     "Live download/upload rates in the browser tab":
       "Velocidades de descarga/subida en vivo en la pestaña",
     "Notify when downloads complete": "Notificar al completar descargas",
-    "Uses the browser notification API":
-      "Usa la API de notificaciones del navegador",
+    "Intercept download links": "Interceptar enlaces de descarga",
+    "Clicking magnet or downloadable links creates tasks":
+      "Los enlaces magnet o de descarga crean tareas al hacer clic",
+    "Download complete": "Descarga completada",
+    "Native notification, even when the popup is closed":
+      "Notificación nativa, funciona sin el popup abierto",
+    "Browser notification while this page is open":
+      "Notificación del navegador mientras la página esté abierta",
     "Confirm before removing tasks": "Confirmar antes de eliminar tareas",
     "Ask before single or batch removal":
       "Pregunta antes de eliminar una o varias tareas",

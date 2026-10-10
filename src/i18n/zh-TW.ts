@@ -208,6 +208,7 @@ export const zhTW = {
     "Enter URLs, one per line...": "輸入連結，每行一個...",
     "Added {{count}} tasks": "已新增 {{count}} 個任務",
     "Task Added": "任務已新增",
+    "Create new task with Aria2 Dashboard": "用 Aria2 Dashboard 建立新任務",
     "Failed to add task": "新增任務失敗",
     "Failed to add {{count}} tasks": "新增失敗 {{count}} 個任務",
     Collapse: "收合",
@@ -292,7 +293,13 @@ export const zhTW = {
     "Live download/upload rates in the browser tab":
       "瀏覽器分頁即時顯示下載/上傳速度",
     "Notify when downloads complete": "下載完成時通知",
-    "Uses the browser notification API": "使用瀏覽器通知功能",
+    "Intercept download links": "攔截下載連結",
+    "Clicking magnet or downloadable links creates tasks":
+      "點擊 magnet 或下載類連結時自動建立任務",
+    "Download complete": "下載完成",
+    "Native notification, even when the popup is closed":
+      "系統原生通知，彈窗未開啟也生效",
+    "Browser notification while this page is open": "頁面開啟時透過瀏覽器通知",
     "Confirm before removing tasks": "刪除任務前確認",
     "Ask before single or batch removal": "單個或批次刪除前詢問",
     "Keyboard shortcuts": "鍵盤快速鍵",

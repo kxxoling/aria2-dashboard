@@ -5,6 +5,9 @@ import { extensionStorage } from "./storage";
 
 export type LanguagePreference = "system" | string;
 
+/** chrome.storage/localStorage key the persisted store lives under. */
+export const STORAGE_KEY = "aria2-dashboard-storage";
+
 export interface AppSettings {
   language: LanguagePreference;
   /** Show live rates in the browser tab title. */
@@ -13,6 +16,8 @@ export interface AppSettings {
   browserNotification: boolean;
   /** Ask for confirmation before removing tasks. */
   confirmTaskRemoval: boolean;
+  /** Intercept clicks on magnet/downloadable links (extension). */
+  interceptLinks: boolean;
   /** Global hotkeys (Cmd/Ctrl+K new task). */
   hotkeysEnabled: boolean;
   /** Polling intervals, ms. */
@@ -27,6 +32,7 @@ export const defaultSettings: AppSettings = {
   titleSpeedEnabled: true,
   browserNotification: false,
   confirmTaskRemoval: true,
+  interceptLinks: true,
   hotkeysEnabled: true,
   globalStatInterval: 1000,
   taskListInterval: 2000,
@@ -83,7 +89,7 @@ export const useAppStore = create<AppState>()(
         set((state) => ({ settings: { ...state.settings, ...patch } })),
     }),
     {
-      name: "aria2-dashboard-storage",
+      name: STORAGE_KEY,
       storage: createJSONStorage(() => extensionStorage),
     },
   ),
